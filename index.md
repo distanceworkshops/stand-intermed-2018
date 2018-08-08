@@ -10,7 +10,7 @@ This is the site for the Intermediate-level Distance Sampling Workshop given in 
 
 ## Course materials
 
-- [Slides](slides.html) in PDF, HTML and R formats
+- [Slides](slides.html)
 - [Practical session exercises and data](practicals.html)
 - [Materials for the R tutorial](R_tutorial.html)
 - [Bibliography](bibliography.html) listing additional useful publications
