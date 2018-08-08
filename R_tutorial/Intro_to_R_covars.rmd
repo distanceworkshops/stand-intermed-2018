@@ -1,0 +1,363 @@
+---
+output: pdf_document
+title: Introduction to R for distance sampling
+header-includes: \usepackage{color}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Specify whether answers are shown 
+answer <- TRUE
+#answer <- FALSE
+
+# Load libraries
+library(Distance)
+```
+
+# 3. Covariates in the detection function
+
+In this practical, we illustrate fitting multiple covariate distance sampling (MCDS) models to point transect data using a bird survey in Hawaii; data on an abundant species, the Hawaii amakihi (\textit{Hemignathus virens}) is used. This practical is based on the case study shown in Section 5.3.2 of Buckland \textit{et al.} (2015) which duplicates the analysis presented in Marques \textit{et al.} (2007). This set of data is included in the distribution of Distance as one of the Sample Projects. You can open this project (entitled amakihi.zip) in the Sample project directory underneath 'My Distance projects' directory residing under 'My Documents'. This document describes the analysis of these data using R.
+
+## Objectives of this practical
+
+1. Introduce different types of plots to explore covariates
+
+2. Add covariates to the detection function
+
+3. Plot the detection functions. 
+
+## Importing the data 
+
+Analysis begins by importing the data from a comma-delimited file (this file was created by copying the data from the amakihi Distance project and removing a few columns). Remember to copy the datafile to your R workspace or specify the directory where the data file is stored in the file name
+
+```{r setup_and_read, message=FALSE, warning=FALSE}
+# Import Amakihi data
+amakihi <- read.csv(file="amakihi.csv")
+
+# Check that it has been imported correctly
+head(amakihi)
+```
+
+These data are made of of eight columns:
+
++ Study.Area - name of the study area
+
++ Region.Label - survey dates which are used as 'strata'
+
++ Sample.Label - point transect identifier
+
++ Effort - survey effort (which is always 1 because point transects used)
+
++ distance - perpendicular distances
+
++ OBS - initials of the observer
+
++ MAS - minutes after sunrise
+
++ HAS - hour after sunrise
+
+The latter three columns are the covariates to be considered for possible inclusion into the detection function. 
+
+There a couple of records with missing distances and so can be deleted with the following command:
+
+```{r, echo=T}
+# Get rid of missing values
+amakihi <- amakihi[!is.na(amakihi$distance), ]
+```
+
+In this command, 
+
++ records in `amakihi` are selected using the square brackets `[]`
+
++ `amakihi` is a data frame and so selection can be performed on either rows or columns i.e. `[rows, columns]`. In this case, the selection is performed on the rows (because the selection criteria is before the comma) and all columns will be retained
+
++ the rows selected as those where the distances (stored in `amakihi$distance`) are not missing. The function `is.na` selects elements that are missing; the symbol `!` means 'not', and so `!is.na` selects elements that are not missing.
+
+## Exploratory data analysis
+
+It is important to gain an understanding of the data prior to fitting detection functions (Buckland \textit{et al.} 2015). With this in mind, preliminary analysis of distance sampling data involves:
+
+* assessing the shape of the collected data,
+* considering the level of truncation of distances, and
+* exploring patterns in potential covariates. 
+
+Using the `summary` function provides a quick way to summarise of all the columns in the data set. 
+
+`summary(amakihi)`
+
+\color{blue}
+```{r, echo=F}
+# Summarise dataset
+if (answer) summary(amakihi)
+```
+\color{black}
+
+We begin by assessing the distribution of distances by plotting histograms with different number of bins and different truncation. 
+
+Plot a histogram of the distances with lots of bins and no truncation. In the command below, `seq(0, 260)` creates a sequence of numbers from 0 to 260, inclusive, at unit intervals (e.g. 0, 1, 2, 3, ..., 260):
+
+`hist(amakihi$distance, breaks=seq(0,260), main="",xlab = "Distance (m)")`
+
+Plot a histogram with lots of bins and truncation at 82.5 - this is the truncation distance that was used in Marques \textit{et al}. (2007):
+
+`hist(amakihi$distance[amakihi$distance<82.5], breaks=33, main="",xlab = "Distance (m)")`
+
+Plot a histogram with truncation at 82.5 but with fewer bins:
+
+`hist(amakihi$distance[amakihi$distance<82.5], breaks=10, main="",xlab = "Distance (m)")`
+
+\color{blue}
+```{r, echo=F, fig.width=6, fig.height=6, fig.align="centre"}
+if (answer) {
+# Divide the plotting window into 4
+  par(mfrow=c(2,2))
+
+# Histogram with lots of bins and no truncation
+  hist(amakihi$distance, breaks=seq(0,260), main="No truncation",xlab = "Distance (m)")
+
+# Histogram with lots of bins and truncation at 82.5 
+  hist(amakihi$distance[amakihi$distance<82.5], breaks=33, main="Truncation 82.5",xlab = "Distance (m)")
+
+# Truncate at 82.5 with fewer bins
+  hist(amakihi$distance[amakihi$distance<82.5], breaks=10,
+     main="Truncation 82.5, fewer bins",xlab = "Distance (m)")
+}
+```
+\color{black}
+
+Next we look at the distribution of distances for each of the potential covariates. In this case, we use boxplots to show the distribution of distances recorded by each observer and for each hour after sunrise. 
+
+Boxplots of distances by observer: 
+
+`boxplot(amakihi$distance~amakihi$OBS, xlab="Observer", ylab="Distance (m)")`
+
+\color{blue}
+```{r, echo=F, fig.width=3.5, fig.height=3.5, fig.align="centre"}
+# Boxplots
+if (answer) boxplot(amakihi$distance~amakihi$OBS, xlab="Observer", ylab="Distance (m)")
+```
+\color{black}
+
+Boxplot of distances for each hour after sunrise:
+
+`boxplot(amakihi$distance~amakihi$HAS, xlab="Hour", ylab="Distance (m)")`
+
+\color{blue}
+```{r, echo=F, fig.width=3.5, fig.height=3.5, fig.align="centre"}
+# Boxplots
+if (answer) boxplot(amakihi$distance~amakihi$HAS, xlab="Hour", ylab="Distance (m)")
+```
+\color{black}
+
+For minutes after sunrise, we create a scatterplot of MAS (on the $x$-axis) against distances (on the $y$-axis). The plotting symbol (or character) selected is a dot with the argument `pch=20`:
+
+`plot(amakihi$MAS, amakihi$distance, xlab="Minutes after sunrise", ylab="Distance (m)", pch=19, cex=0.5)`
+
+\color{blue}
+```{r, echo=F, fig.width=3.5, fig.height=3.5, fig.align="centre"}
+# Plot of MAS vs distance (using dots)
+if (answer) plot(amakihi$MAS, amakihi$distance, xlab="Minutes after sunrise", ylab="Distance (m)", pch=20)
+```
+\color{black}
+
+## Adjusting the raw covariates
+
+We would like to treat OBS and HAS as factor variables as in the original analysis; OBS is, by default, treated as a factor variable because it consists of characters rather than numbers. `HAS`, on the other hand, consists of numbers and so by default would be treated as a continuous variable (i.e. non-factor). That is fine if we want the effect of `HAS` to be monotonic (i.e. detectability either increases or decreases as a function of `HAS`). If we want `HAS` to have a non-linear effect on detectability, then we need to indicate to R to treat it as a factor as shown below.  
+
+```{r obsfact, echo=T}
+# Convert HAS to a factor
+amakihi$HAS <- factor(amakihi$HAS)
+```
+
+The next adjustment is to change the *reference* level of the *observer* and *hour* factor covariates - the only reason to do this is to get the estimated parameters in the detection function to match the parameters estimated by `Distance`. By default R uses the first factor level but by using the `relevel` function, this can be changed: 
+
+```{r hasfact}
+# Set the reference level 
+amakihi$OBS <- relevel(amakihi$OBS, ref="TKP")
+amakihi$HAS <- relevel(amakihi$HAS, ref="5")
+```
+
+One final adjustment, and more subtle, is a transformation of the continuous covariate, `MAS`. We are entertaining three possible covariates in our detection function: `OBS`, `HAS` and `MAS`. The first two variables, `OBS` and `HAS`, are both factor variables, and so, essentially, we can think of them as taking on values between 1 and 3 in the case of `OBS`, and 1 to 6 in the case of `HAS`.  However, `MAS` can take on values from -18 (detections before sunrise) to >300 and the disparity in scales of measure between `MAS` and the other candidate covariates can lead to difficulties in the performance of the optimizer fitting the detection functions in R. The solution to the difficulty is to scale `MAS` such that it is on a scale (approx. 1 to 5) comparable with the other covariates.
+
+Dividing all the `MAS` measurements by the standard deviation (function `sd`) of those measurements accomplishes the desired compaction in the range of the `MAS` covariate without changing the shape of the distribution of `MAS` values. The `na.rm=TRUE` argument ensures that any missing values are ignored. 
+
+```{r MASscale}
+# Rescale MAS by dividing by standard deviation
+amakihi$MAS <- amakihi$MAS/sd(amakihi$MAS, na.rm=TRUE)
+```
+
+Check what it has done by looking at a summary of the adjusted MAS:
+
+`summary(amakihi$MAS)`
+
+\color{blue}
+```{r, echo=F}
+# Check adjusted MAS
+if (answer) summary(amakihi$MAS)
+```
+\color{black}
+
+## Candidate models
+
+With three potential covariates, there are 8 possible combinations for including them in the detection function:
+
++ No covariates
+
++ OBS
+
++ HAS
+
++ MAS
+
++ OBS + HAS
+
++ OBS + MAS
+
++ HAS + MAS
+
++ OBS + HAS + MAS
+
+There are three possible key functions (although note that if the uniform function is selected, covariates cannot be included) and if adjustment terms are included, the total number of formula/key function/adjustment combinations is large. It is not best practice to take a scatter gun approach to detection function model fitting and so in Buckland \textit{et al}. (2015) 13 combinations were considered. Here, we look at a subset of these as illustration of including covariates but first a hazard rate key function with no covariates and no adjustment terms is fitted. 
+
+If it is not already loaded, then first load the `Distance` package. 
+
+`library(Distance)`
+
+Fit a hazard rate model with no covariates or adjustment terms. By default, line transects are assumed and because we want point transects, the argument `transect="point"` is specified:
+
+`hr.model0 <- ds(amakihi, transect="point", key="hr", truncation=82.5, adjustment=NULL, order=0)`
+
+The fitted model can be investigated using the `summary` function:
+
+`summary(hr.model0)`
+
+Make a note of the AIC for this model. 
+
+\color{blue}
+```{r, echo=F, message=F, warning=F}
+if (answer) {
+  hr.model0 <- ds(amakihi, transect="point", key="hr", truncation=82.5, adjustment=NULL, order=0, quiet=T)
+  summary(hr.model0)
+}
+```
+\color{black}
+
+Now fit a hazard rate model with OBS as a covariate in the detection function and make a note of the AIC. Has it reduced by including a covariate? 
+
+`hr.model1 <- ds(amakihi, transect="point", key="hr", formula=~OBS, truncation=82.5, adjustment=NULL, order=0)`
+
+\color{blue}
+```{r, echo=F, message=F, warning=F}
+if (answer) {
+  hr.model1 <- ds(amakihi, transect="point", key="hr", formula=~OBS, truncation=82.5, adjustment=NULL, order=0, quiet=T)
+  summary(hr.model1)
+}
+```
+\color{black}
+
+Fit a hazard rate model with OBS and HAS in the detection function:
+
+`hr.model2 <- ds(amakihi, transect="point", key="hr", formula=~OBS+HAS, truncation=82.5, adjustment=NULL, order=0)`
+
+\color{blue}
+```{r, echo=F, message=F, warning=F}
+if (answer) {
+  hr.model2 <- ds(amakihi, transect="point", key="hr", formula=~OBS+HAS, truncation=82.5, adjustment=NULL, order=0, quiet=T)
+  summary(hr.model2)
+}
+```
+\color{black}
+
+Try fitting other possible formula and decide which model is best in terms of AIC.
+
+\color{blue}
+```{r fitmodels, echo=F, message=F, warning=F}
+# Fit all possible models and sort based on AIC
+if (answer) {
+# Specify models
+  form <- c("OBS","HAS","MAS","OBS+MAS","OBS+HAS","MAS+HAS","OBS+MAS+HAS")
+  len <- length(form)
+# Set up summary table with details from simple model
+  temp <- summary(hr.model0)
+  results <- NULL
+  results$formula <- "None"
+  results$key <- temp$ds$key
+  results$npar <- length(temp$ddf$par)
+  results$aic <- temp$ddf$criterion
+  for (i in 1:len) {
+    j <- i + 1
+    covars <- as.formula(paste("~",form[i],sep=""))
+    mod.fit <- ds(amakihi, transect="point", key="hr", formula=covars, truncation=82.5, adjustment=NULL, order=0, quiet=TRUE)
+    temp <- summary(mod.fit)
+    results$formula[j] <- form[i]
+    results$key[j] <- temp$ds$key
+    results$npar[j] <- length(temp$ddf$par)
+    results$aic[j] <- temp$ddf$criterion
+  }
+  results <- data.frame(results)
+
+# Calculate deltaAIC
+  results$deltaaic <- results$aic - min(results$aic)
+# Sort by deltaAIC
+  results.sort <- results[order(results$deltaaic), ]
+}
+
+# Print results
+if (answer) {
+  cat('The models, sorted in order of smallest AIC, is shown below.','\n\n')
+  print(results.sort)
+  cat('\n','The model with the lowest AIC was the model with OBS+MAS.')
+}
+```
+\color{black}
+
+## Plotting the detection functions
+
+The detection functions can be investigated using the `plot` function as shown below:
+
+`plot(hr.model0$ddf, nc=10, main="Simple model", pch=20)`
+
+\color{blue}
+```{r, echo=F, fig.width=3.5, fig.height=3.5}
+if (answer) {
+# Plot simple model
+  plot(hr.model0$ddf, nc=10, main="Simple model", pch=20)
+}
+```
+\color{black}
+
+`plot(hr.model1$ddf, nc=10, main="Model with OBS", pch=20)`
+
+\color{blue}
+```{r, echo=F, fig.width=3.5, fig.height=3.5}
+if (answer) {
+# Plot model with OBS
+  plot(hr.model1$ddf, nc=10, main="Model with OBS", pch=20)
+}
+```
+\color{black}
+
+What does the detection function look like for your selected model? 
+
+\color{blue}
+```{r, echo=F, fig.width=3.5, fig.height=3.5, message=F, warning=F}
+if (answer) {
+  hr.best <- ds(amakihi, transect="point", key="hr", truncation=82.5, adjustment=NULL, order=0, quiet=T, formula=~OBS+MAS)
+# Plot model with OBS
+  plot(hr.best$ddf, nc=10, main="Model with OBS and MAS", pch=20)
+}
+```
+\color{black}
+
+To see more sophisticated examples of plotting the detection function for the selected model see the code accompanying Buckland \textit{et al}. (2015) Hawaiian Amakihi case study.
+
+## Possible extensions
+
++ Provide example of plotting detection function for each OBS and different levels of MAS.
+
+## References
+
+Buckland ST, Rexstad EA, Marques TA and Oedekoven CS (2015) Distance Sampling: Methods and Applications. Springer 277 pp. ISBN: 978-3-319-19218-5 (Print) 978-3-319-19219-2 (Online)
+
+Marques TA, Thomas L, Fancy SG and Buckland ST (2007) Improving estimates of bird density using multiple covariate distance sampling. The Auk 124:1229-1243

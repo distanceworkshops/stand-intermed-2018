@@ -1,0 +1,130 @@
+---
+title: Introduction to R for distance sampling
+header-includes: \usepackage{color}
+output: pdf_document
+---
+
+# 6. Exporting 'Distance for Windows' projects to R using `readdst`
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Load library
+library(knitr)
+library(readdst)
+
+# Specify whether answers are shown 
+answer <- TRUE
+mycode <- ifelse(answer, TRUE, FALSE)
+#answer <- FALSE```
+```
+
+The R package `readdst` (Miller, NA) was created to port Distance for Windows projects (Thomas \textit{et al}. (2010) into R to make use of the software developments that continue to be incorporated into R but not always in Distance for Windows. 
+
+In this practical, the ducknests project will be used as an example. The detections from this project were used in a previous practical. 
+
+## Objective of the practical 
+
+1. Install the necessary packages
+
+2. Convert a distance project
+
+3. Examine the resulting object 
+
+4. Extract information from the resulting object.
+
+## Setting up
+
+The package `readdst` is stored on github rather than the CRAN repository, therefore installation is a bit different to that of `Distance` but still straightforward. One wrinkle is that a 32 bit version of R should be used. 
+
+The commands below will install the necessary packages:
+
+`install.packages("devtools")`
+
+`devtools::install_github("distancedevelopment/readdst")`
+
+Once the `readdst` package has been installed, it needs to be loaded into the current work session:
+
+`library(readdst)`
+
+## Converting a project
+
+Converting a project for analysis in R is straightforward:
+
+```{r, echo=T}
+# Commands used to extract the data (in R 32bit)
+#ducknest <- convert_project("C:/workshops/2018/Ducknest exercise")
+#temp <- (ducknest$"Half normal with no adjustments"$env$data)
+```
+
+`ducknest <- convert_project("C:/workshops/2018/Ducknest exercise")`
+
+There are two things to note, 
+
++ the path to the Distance for Windows project should be specified (if not in the working directory)
+
++ the '.dst' suffix is not required. 
+
+## Examining the R object
+
+The resulting object (in this case `ducknest`) is composed of a series, or list, of objects within objects (a bit like the object from the `ds` function). Here the first level of objects are named after the Analyses in the Distance for Windows project. The `names` function can be used to delve into the objects: 
+
+`names(ducknest)`
+
+There was only one Analysis definition set up for this project and so the command gives:
+
+\color{blue}
+`"Half normal with no adjustments"`
+\color{black}
+
+Appling `names` to this object shows that there many further objects (note quotes are required):
+
+`names(ducknest$"Half normal with no adjustments")`
+
+\color{blue}
+` [1] "call"          "aic.select"    "status"        "env"    `      
+` [5] "filter"        "group_size"    "detection_by"  "gof_intervals"`
+
+` [9] "estimation"    "name"          "ID"            "engine" `      
+`[13] "project"       "project_file" `
+\color{black}
+
+Here, we highlight the `env` object because this object contains the data tables.
+
+`names(ducknest$"Half normal with no adjustments"$env)`
+
+\color{blue}
+`[1] "units"        "obs.table"    "sample.table" "region.table" "data"  `
+\color{black}
+
+These tables can be extracted from the list (for ease of use) and then analysed using the `ds` function (Miller 2016). For example, 
+
+`duck.detect <- ducknest$"Half normal with no adjustments"$env$data`
+
+`ds(duck.detect, key="hn")`
+
+See practical 2 for an example of including `sample.table` etc as arguments. 
+
+## Further information
+
+More information and examples are provided at the following links. 
+
+A poster outlining the process:
+
+http://converged.yt/posters/RexstadISEC2018poster.pdf
+
+Examples of converting data (Amakihi and golftees):
+
+https://cdn.rawgit.com/DistanceDevelopment/readdst/e308e819/vignettes/Project-migration.html
+
+https://cdn.rawgit.com/DistanceDevelopment/readdst/e308e819/vignettes/golftees.html
+
+## References
+
+Miller DL (NA) `readdst`: Convert Distance for Windows projects to R analyses. R package version 0.0.5.
+
+Miller DL (2016). Distance: Distance Sampling Detection Function and Abundance Estimation. R package version 0.9.6. https://CRAN.R-project.org/package=Distance
+
+Thomas L, Buckland ST, Rexstad EA, Laake J, Strindberg S, Hedley SL, Bishop JR, Marques TA and Burnham KP (2010) Distance software: design and analysis of distance sampling surveys for estimating population size. Journal of Applied Ecology: 47(1):5-14
+
+
