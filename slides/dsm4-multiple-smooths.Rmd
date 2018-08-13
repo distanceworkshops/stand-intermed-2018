@@ -639,6 +639,7 @@ sens[,3] <- round(sens[,3],2)
 
 kable(sens, format="html")
 ```
+
 - "Full" model still explains most deviance
 - No depth model requires spatial smooth to "mop up" extra variation
 - We'll come back to this when we do prediction
