@@ -357,7 +357,7 @@ for(i in 1:length(cf)){
   - Straight line == VERY SMOOTH
 - How do we do this mathematically?
   - Derivatives!
-  - (Calculus *was* a useful class afterall)
+  - (Calculus *was* a useful class after all)
 
 
 
@@ -426,8 +426,8 @@ saveGIF(plot_wiggly(f2, xvals), "wiggly.gif", interval = 0.2, ani.width = 800, a
 - For each $b_k$ calculate the penalty
 - Penalty is a function of $\beta$
   - $\lambda \beta^\text{T}S\beta$
-- $S$ calculated once
-- smoothing parameter, $\lambda$ dictates influence
+- $S$ (*penalty matrix*) calculated once
+- *smoothing parameter*, $\lambda$ dictates influence
 
 
 ---

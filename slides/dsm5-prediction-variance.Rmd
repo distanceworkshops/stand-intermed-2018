@@ -102,18 +102,20 @@ print(p)
 # Going back to the formula
 
 
-(Count) Model:
+Count model ( $j$ observations):
 
 $$
 n_j = A_j\hat{p}_j \exp\left[ \beta_0 + s(\text{y}_j) + s(\text{Depth}_j) \right] + \epsilon_j
 $$
 
+<br/>
 Predictions (index $r$):
 
 $$
-n_r = A_r \exp\left[ \beta_0 + s(\text{y}_r) + s(\text{Depth}_r) \right]
+\hat{n}_r = A_r \exp\left[ \hat{\beta}_0 + \hat{s}(\text{y}_r) + \hat{s}(\text{Depth}_r) \right]
 $$
 
+<br/>
 Need to "fill-in" values for $A_r$, $\text{y}_r$ and $\text{Depth}_r$.
 
 
@@ -157,7 +159,7 @@ head(predgrid)
 # Predictors
 
 
-```{r preddata-plot, fig.width=16, fig.height=16}
+```{r preddata-plot}
 library(gridExtra)
 p1 <- ggplot(predgrid[,c("x","y","Depth")]) +
       geom_tile(aes(x=x,y=y,fill=Depth)) +
@@ -247,7 +249,7 @@ R subsetting lets you calculate "interesting" estimates:
 ```{r subset-abund, echo=TRUE}
 # how many sperm whales at depths less than 2500m?
 sum(predgrid$Nhat_tw[predgrid$Depth < 2500])
-# how many sperm whales North of 0?
+# how many sperm whales East of 0?
 sum(predgrid$Nhat_tw[predgrid$x>0])
 ```
 
@@ -399,7 +401,7 @@ class: inverse, middle, center
 # Sources of uncertainty
 
 
-- Detection function
+- Detection function parameters
 - GAM parameters
 
 ```{r unc-sources, fig.width=18}
@@ -451,8 +453,8 @@ plot(dsm_all, scale=0, scheme=2, select=5)
 # Predictions to prediction variance (roughly)
 
 
-- "map" data onto fitted values $\mathbf{X}\boldsymbol{\beta}$
-- "map" prediction matrix to predictions $\mathbf{X}_p \boldsymbol{\beta}$
+- "map" data onto fitted values $\mathbf{X}\hat{\boldsymbol{\beta}}$
+- "map" prediction matrix to predictions $\mathbf{X}_p \hat{\boldsymbol{\beta}}$
 - Here $\mathbf{X}_p$ need to take smooths into account
 - pre-/post-multiply by $\mathbf{X}_p$ to "transform variance"
   - $\Rightarrow \mathbf{X}_p^\text{T}\mathbf{V}_\boldsymbol{\beta} \mathbf{X}_p$
@@ -632,7 +634,7 @@ print(p)
 - Not always the case (huge CVs possible)
 - These can be a pain to plot
 - Use `cut()` in R to make categorical variable
-  - e.g. `c(seq(0,1, len=100), 2:4, Inf)` or somesuch
+  - e.g. `c(seq(0,1, len=10), 2:4, Inf)` or somesuch
 
 
 
