@@ -1,5 +1,5 @@
 ---
-title: "Making predictions"
+title: "Predictions and variance"
 author: "David L Miller (`@millerdl`)"
 output:
   xaringan::moon_reader:
@@ -33,7 +33,7 @@ theme_set(theme_cowplot(20))
 
 class: title-slide, inverse, center, middle
 
-# Making predictions
+# Predictions<br/>and<br/>variance
 
 <div style="position: absolute; bottom: 15px; vertical-align: center; left: 10px">
 <img src="images/02-foundation-vertical-white.png" height="200">
@@ -613,7 +613,7 @@ library(rgdal)
 tracks <- readOGR("../practicals/Analysis.gdb", "Segments")
 tracks <- fortify(tracks)
 ```
-```{r plottracksCV, fig.width=12, fig.height=12}
+```{r plottracksCV}
 library(ggplot2)
 p <- plot(dsm_tw_var_map, observations=FALSE, plot=FALSE) + 
       coord_equal() +
