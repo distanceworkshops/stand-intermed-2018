@@ -388,15 +388,15 @@ plot_wiggly <- function(f2, xvals){
     par(mfrow=c(1,3))
     plot(xvals, f2v, type="l", main="function", ylab="f")
     points(xvals[i], f2v[i], pch=19, col="red")
-    
+
     plot(xvals, f2vg, type="l", main="derivative", ylab="df/dx")
     points(xvals[i], f2vg[i], pch=19, col="red")
-    
+
     plot(xvals, f2vg2, type="l", main="2nd derivative", ylab="d2f/dx2")
     points(xvals[i], f2vg2[i], pch=19, col="red")
     polygon(x=c(0,xvals[1:i], xvals[i],f2vg2min),
             y=c(f2vg2min,f2vg2[1:i],f2vg2min,f2vg2min), col = "grey")
-    
+
     ani.pause()
   }
 }

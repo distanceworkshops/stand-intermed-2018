@@ -68,16 +68,16 @@ class: inverse, middle, center
 
 
 - Already know that `+` is our friend
-- Add everything then remove smooth terms?
+- Can build a big model...
 
 
 ```r
 dsm_all &lt;- dsm(count~s(x, y) +
-                        s(Depth) +
-                        s(DistToCAS) +
-                        s(SST) +
-                        s(EKE) +
-                        s(NPP),
+                     s(Depth) +
+                     s(DistToCAS) +
+                     s(SST) +
+                     s(EKE) +
+                     s(NPP),
                   ddf.obj=df_hr,
                   segment.data=segs, observation.data=obs,
                   family=tw())
@@ -90,39 +90,32 @@ class: inverse, middle, center
 
 ---
 
-# Smooth term selection
+# Term selection
 
 
-- Classically, two main approaches
-- Both have problems
-- Usually use `\(p\)`-values
+.pull-left[
+- Two popular approaches (use `\(p\)`-values)
 
 **Stepwise selection** - path dependence
 
 **All possible subsets** - computationally expensive (fishing?)
-
+]
+.pull-right[
+&lt;img src="images/gnome.jpg"&gt;
+]
 
 ---
 
-
 # p-values
 
-
-- `\(p\)`-values can calculate
-- Test for zero effect of a smooth
+- Test for *zero effect* of a smooth
 - They are **approximate** for GAMs (but useful)
 - Reported in `summary`
-
 
 ---
 
 # p-values example
 
-
-
-```r
-summary(dsm_all)
-```
 
 ```
 ## 
@@ -154,23 +147,47 @@ summary(dsm_all)
 ## -REML = 368.97  Scale est. = 3.9334    n = 949
 ```
 
+---
+
+class: inverse, middle, center
+
+# Path dependence is an issue here
 
 ---
 
+# Term selection during fitting
 
-# Shrinkage or extra penalties
 
 
-- Use penalty to remove terms during fitting
-- Two methods
-- Basis `s(..., bs="ts")` - thin plate splines with shrinkage
-  - nullspace should be shrunk less than the wiggly part
-- `dsm(..., select=TRUE)` - extra penalty
-  - no assumption of how much to shrink the nullspace
+.pull-left[
+- Penalty already removes complexity from model
+- What about using it to remove the whole term?
+]
+.pull-right[
+![animation of penalty in action](images/shrinky_dink.gif)
+]
+
 
 ---
+
+# Shrinkage approach
+
+
+
+.pull-left[
+- Basis `s(..., bs="ts")` - thin plate splines *with shrinkage*
+- remove the wiggles **then** remove the "linear" bits
+- nullspace should be shrunk less than the wiggly part
+]
+.pull-right[
+![animation of penalty in action](images/shrinky_dink_ts.gif)
+]
+
+
+
+---
+
 # Shrinkage example
-
 
 
 ```r
@@ -185,11 +202,21 @@ dsm_ts_all &lt;- dsm(count~s(x, y, bs="ts") +
                   family=tw())
 ```
 
+---
+
+# Model with no shrinkage
+
+
+![](dsm4-multiple-smooths_files/figure-html/smooth-no-shrinkage-1.png)&lt;!-- --&gt;
+---
+
+# ... with shrinkage
+
+![](dsm4-multiple-smooths_files/figure-html/smooth-shrinkage-1.png)&lt;!-- --&gt;
 
 ---
 
-# Shrinkage example
-
+# Shrinkage in action
 
 
 ```r
@@ -227,11 +254,24 @@ summary(dsm_ts_all)
 ## -REML = 385.04  Scale est. = 4.5486    n = 949
 ```
 
+---
+
+# Alternative: extra penalty
+
+
+
+.pull-left[
+- `dsm(..., select=TRUE)` - extra penalty
+- no assumption of how much to shrink the nullspace
+- "no assumption" might not be such a good idea?
+]
+.pull-right[
+![animation of penalty in action](images/shrinky_dink_select.gif)
+]
 
 ---
 
 # Extra penalty example
-
 
 
 ```r
@@ -290,19 +330,63 @@ summary(dsm_sel)
 
 ---
 
+# Extra penalty example
+
+![](dsm4-multiple-smooths_files/figure-html/smooth-sel-1.png)&lt;!-- --&gt;
+
+---
+
 # EDF comparison
 
 
-
-```
-##              allterms select     ts
-## s(x,y)          5.236 7.6936 1.8875
-## s(Depth)        3.568 3.6449 3.6794
-## s(DistToCAS)    1.000 0.0000 0.0001
-## s(SST)          5.927 0.0002 0.3827
-## s(EKE)          1.763 1.4174 0.8196
-## s(NPP)          2.393 0.0002 0.0004
-```
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt;   &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; allterms &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; select &lt;/th&gt;
+   &lt;th style="text-align:right;"&gt; ts &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; s(x,y) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.2361 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 7.6936 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.8875 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; s(Depth) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.5677 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.6449 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 3.6794 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; s(DistToCAS) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.0001 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0000 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0001 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; s(SST) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 5.9270 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.3827 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; s(EKE) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.7628 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1.4174 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.8196 &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; s(NPP) &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 2.3929 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0002 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 0.0004 &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
 
 
 ---
@@ -332,183 +416,19 @@ length(dsm_sel$sp)
 
 ---
 
-class: inverse, middle, center
-
-# Let's employ a mixture of these techniques
-
----
-
 # How do we select smooth terms?
 
-
 1. Look at EDF
-  - Terms with EDF&lt;1 may not be useful
-  - These can usually be removed
+  - Terms with EDF&lt;1 may not be useful (can we remove?)
 2. Remove non-significant terms by `\(p\)`-value
   - Decide on a significance level and use that as a rule
 
-(In some sense leaving "shrunk" terms in is more "consistent", but can be computationally annoying)
-
-
----
-class: inverse, middle, center
-
-# Example of selection
-
----
-
-# Selecting smooth terms
-
-
-
-```
-## 
-## Family: Tweedie(p=1.277) 
-## Link function: log 
-## 
-## Formula:
-## count ~ s(x, y, bs = "ts") + s(Depth, bs = "ts") + s(DistToCAS, 
-##     bs = "ts") + s(SST, bs = "ts") + s(EKE, bs = "ts") + s(NPP, 
-##     bs = "ts") + offset(off.set)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  -20.260      0.234  -86.59   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##                    edf Ref.df     F  p-value    
-## s(x,y)       1.8875209     29 0.705 3.56e-06 ***
-## s(Depth)     3.6794182      9 4.811 2.15e-10 ***
-## s(DistToCAS) 0.0000934      9 0.000   0.6797    
-## s(SST)       0.3826654      9 0.063   0.2160    
-## s(EKE)       0.8196256      9 0.499   0.0178 *  
-## s(NPP)       0.0003570      9 0.000   0.8359    
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =   0.11   Deviance explained = 35.1%
-## -REML = 385.04  Scale est. = 4.5486    n = 949
-```
-
-
----
-# Shrinkage in action
-
-
-![](dsm4-multiple-smooths_files/figure-html/smooth-shrinkage-1.png)&lt;!-- --&gt;
-
----
-
-
-# Same model with no shrinkage
-
-
-![](dsm4-multiple-smooths_files/figure-html/smooth-no-shrinkage-1.png)&lt;!-- --&gt;
+(In some sense leaving "shrunk" terms in is more "consistent" in terms of variance estimation, but can be computationally annoying)
 
 
 ---
 
 
-# Let's remove some smooth terms &amp; refit
-
-
-
-```r
-dsm_all_tw_rm &lt;- dsm(count~s(x, y, bs="ts") +
-                        s(Depth, bs="ts") +
-                        #s(DistToCAS, bs="ts") +
-                        #s(SST, bs="ts") +
-                        s(EKE, bs="ts"),#+
-                        #s(NPP, bs="ts"),
-                     ddf.obj=df_hr,
-                     segment.data=segs,
-                     observation.data=obs,
-                     family=tw())
-```
-
-
----
-
-# What does that look like?
-
-
-
-```
-## 
-## Family: Tweedie(p=1.279) 
-## Link function: log 
-## 
-## Formula:
-## count ~ s(x, y, bs = "ts") + s(Depth, bs = "ts") + s(EKE, bs = "ts") + 
-##     offset(off.set)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)  -20.258      0.234  -86.56   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##             edf Ref.df     F  p-value    
-## s(x,y)   1.8969     29 0.707 1.76e-05 ***
-## s(Depth) 3.6949      9 5.024 1.08e-10 ***
-## s(EKE)   0.8106      9 0.470   0.0216 *  
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.105   Deviance explained = 34.9%
-## -REML = 385.09  Scale est. = 4.5733    n = 949
-```
-
-
----
-
-# Removing EKE...
-
-
-
-```
-## 
-## Family: Tweedie(p=1.268) 
-## Link function: log 
-## 
-## Formula:
-## count ~ s(x, y, bs = "ts") + s(Depth, bs = "ts") + offset(off.set)
-## 
-## Parametric coefficients:
-##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept) -20.3088     0.2425  -83.75   &lt;2e-16 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## Approximate significance of smooth terms:
-##            edf Ref.df     F  p-value    
-## s(x,y)   6.443     29 1.322 4.75e-08 ***
-## s(Depth) 3.611      9 4.261 1.49e-10 ***
-## ---
-## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-## 
-## R-sq.(adj) =  0.141   Deviance explained =   38%
-## -REML = 389.86  Scale est. = 4.3516    n = 949
-```
-
-
----
-
-# General strategy
-
-
-For each response distribution and non-nested model structure:
-
-1. Build a model with the smooths you want
-2. Make sure that smooths are flexible enough (`k=...`)
-3. Remove smooths that have been shrunk
-4. Remove non-significant smooths
-
-
----
 class: inverse, middle, center
 
 # Comparing models
@@ -542,7 +462,7 @@ class: inverse, middle, center
 
 - Two listed in `summary`
   - Deviance explained
-  - Adjusted `\(R^2\)`
+  - Adjusted `\(R^2\)` (not useful)
 - Deviance is a generalisation of `\(R^2\)`
 - Highest likelihood value (*saturated* model) minus estimated model value
 - (These are usually not very high for DSMs)
@@ -573,11 +493,9 @@ AIC(dsm_ts_all)
 ## [1] 1225.822
 ```
 
-
 ---
 
 # A quick note about REML scores
-
 
 - Use REML to select the smoothness
 - Can also use the score to do model selection
@@ -588,6 +506,7 @@ AIC(dsm_ts_all)
 
 
 ---
+
 class: inverse, middle, center
 
 # Selecting between response distributions
@@ -738,9 +657,13 @@ class: inverse, middle, center
 ```
 
 ```
-##               edf Ref.df        F      p-value
-## s(x,y)   6.443110     29 1.321664 4.754018e-08
-## s(Depth) 3.611031      9 4.261217 1.485929e-10
+##                       edf Ref.df            F      p-value
+## s(x,y)       1.887521e+00     29 7.053433e-01 3.564239e-06
+## s(Depth)     3.679418e+00      9 4.811277e+00 2.149915e-10
+## s(DistToCAS) 9.339573e-05      9 1.709199e-06 6.796698e-01
+## s(SST)       3.826654e-01      9 6.305406e-02 2.159885e-01
+## s(EKE)       8.196256e-01      9 4.989110e-01 1.775703e-02
+## s(NPP)       3.570476e-04      9 1.615127e-06 8.359159e-01
 ```
 
 ```
@@ -748,10 +671,12 @@ class: inverse, middle, center
 ```
 
 ```
-##               edf Ref.df        F      p-value
-## s(x,y) 13.7776636     29 2.589135 1.161592e-12
-## s(EKE)  0.8448449      9 0.566980 1.050411e-02
-## s(NPP)  0.7994187      9 0.362814 3.231808e-02
+##                       edf Ref.df            F      p-value
+## s(x,y)       1.377758e+01     29 2.588645e+00 1.164871e-12
+## s(DistToCAS) 1.869964e-04      9 2.575100e-06 6.877802e-01
+## s(SST)       3.679648e-04      9 6.186926e-06 6.658640e-01
+## s(EKE)       8.448440e-01      9 5.669750e-01 1.050438e-02
+## s(NPP)       7.993690e-01      9 3.627747e-01 3.229658e-02
 ```
 
 
@@ -777,9 +702,12 @@ class: inverse, middle, center
 ```
 
 ```
-##               edf Ref.df        F      p-value
-## s(SST)   4.583260      9 3.244322 3.118815e-06
-## s(Depth) 3.973359      9 6.799043 4.125701e-14
+##                       edf Ref.df            F      p-value
+## s(DistToCAS) 0.0002587354      9 1.804557e-06 8.019754e-01
+## s(SST)       3.7878795045      9 1.401853e+00 2.951200e-03
+## s(Depth)     3.6560507550      9 4.260082e+00 3.020240e-09
+## s(EKE)       0.8089036590      9 4.616991e-01 2.181356e-02
+## s(NPP)       2.4578806949      9 1.371706e+00 1.115487e-03
 ```
 
 ```
@@ -787,9 +715,13 @@ class: inverse, middle, center
 ```
 
 ```
-##               edf Ref.df        F      p-value
-## s(x,y)   6.443110     29 1.321664 4.754018e-08
-## s(Depth) 3.611031      9 4.261217 1.485929e-10
+##                       edf Ref.df            F      p-value
+## s(x,y)       1.887521e+00     29 7.053433e-01 3.564239e-06
+## s(Depth)     3.679418e+00      9 4.811277e+00 2.149915e-10
+## s(DistToCAS) 9.339573e-05      9 1.709199e-06 6.796698e-01
+## s(SST)       3.826654e-01      9 6.305406e-02 2.159885e-01
+## s(EKE)       8.196256e-01      9 4.989110e-01 1.775703e-02
+## s(NPP)       3.570476e-04      9 1.615127e-06 8.359159e-01
 ```
 
 
@@ -816,22 +748,23 @@ class: inverse, middle, center
  &lt;/thead&gt;
 &lt;tbody&gt;
   &lt;tr&gt;
-   &lt;td style="text-align:left;"&gt; `s(x,y) + s(Depth)` &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1229.888 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 37.96 &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; `all` &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1225.822 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 35.10 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; `s(x,y)+s(EKE)+s(NPP)` &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1248.167 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1248.172 &lt;/td&gt;
    &lt;td style="text-align:right;"&gt; 34.54 &lt;/td&gt;
   &lt;/tr&gt;
   &lt;tr&gt;
    &lt;td style="text-align:left;"&gt; `s(SST)+s(Depth)` &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 1228.152 &lt;/td&gt;
-   &lt;td style="text-align:right;"&gt; 35.90 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 1228.106 &lt;/td&gt;
+   &lt;td style="text-align:right;"&gt; 39.28 &lt;/td&gt;
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
+
 - "Full" model still explains most deviance
 - No depth model requires spatial smooth to "mop up" extra variation
 - We'll come back to this when we do prediction
