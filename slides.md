@@ -12,7 +12,7 @@ Here you can find the slides used in the lectures. They are provided in three fo
 
 Lecture name                                            | PDF                                                      |                      HTML                    |             R source
 --------------------------------------------------------|----------------------------------------------------------|----------------------------------------------|-----------------------------------
-Distance sampling review & assumptions                  |  |                                              |
+Distance sampling review & assumptions                  |                                                          |                                              |
 What is a density surface model?                        | [PDF](slides/dsm1-what-is-a-dsm.pdf)                     | [HTML](slides/dsm1-what-is-a-dsm.html)       | [Rmd](slides/dsm1-what-is-a-dsm.Rmd)
 Generalized Additive Models                             | [PDF](slides/dsm2-gams.pdf)                              | [HTML](slides/dsm2-gams.html)                | [Rmd](slides/dsm2-gams.Rmd)
 DSM model checking                                      | [PDF](slides/dsm3-model-checking.pdf)                    | [HTML](slides/dsm3-model-checking.html)      | [Rmd](slides/dsm3-model-checking.Rmd)

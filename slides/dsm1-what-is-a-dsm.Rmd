@@ -7,6 +7,7 @@ output:
       highlightStyle: github
       highlightLines: true
       slideNumberFormat: ""
+    lib_dir: libs
     seal: false
     mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
 css: custom.css

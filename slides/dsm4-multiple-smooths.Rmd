@@ -8,6 +8,7 @@ output:
       highlightLines: true
       slideNumberFormat: ""
     seal: false
+    lib_dir: libs
     mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
 css: custom.css
 
@@ -644,7 +645,7 @@ summary(dsm_ts_all)$s.table
 
 ```{r sensitivity-depth, fig.width=12}
 par(mfrow=c(1,2))
-plot(dsm_all_tw_rm, select=2, ylim=c(-5,5))
+plot(dsm_ts_all, select=2, ylim=c(-5,5))
 plot(dsm_no_xy, select=2, ylim=c(-5,5))
 ```
 
