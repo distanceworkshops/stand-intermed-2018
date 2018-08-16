@@ -1,27 +1,30 @@
 ---
 output: pdf_document
 title: Introduction to R for distance sampling
+author: Centre for Research into Ecological and Environmental Modelling
+subtitle: Workshop, 26 August 2018
 header-includes: \usepackage{color}
+fontsize: 12pt
 ---
 
-# 5. More complicated analyses
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+# Specify whether answers are shown 
+#answer <- TRUE
+answer <- FALSE
+
+# Load Distance
+library(Distance)
+```
+
+# 1.5 More complicated analyses
 
 This practical is based on the Montrave songbird case study in Buckland \textit{et al}. (2015), Chapter 5 with computer code under 'Montrave songbird case study. Both point and line transect surveys were conducted and here we use the data from the line transect data, although the issues (and solutions) will be similar for both. 
 
 These data are provided in a 'flat file' format (i.e. it contains all the necessary columns to estimate a detection function, density and abundance) rather than having separate files for detections, transects, regions (as in Practical 2). While both formats are equally valid, the 'flat file' approach has a particular idiosyncrasy which we exploit here to introduce more functions and data manipulation.  
 
 Several species of birds were identified but not all species were detected on all transects. If a simple data selection is performed to select records for a particular species, then not all of the transects will be included in the resulting data (because that species may not have been seen). This doesn't matter if we are only interested in fitting detection functions, but will matter if we wish to estimate density and abundance because the effort will be too low since some of the transects are missing. To correct for this, some data frame manipulation is required. There is generally more than one way to do something in R - for an alternative way see the computer code 'Montrave song bird case study' associated with Buckland \textit{et al}. (2015). 
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-
-# Specify whether answers are shown 
-answer <- TRUE
-#answer <- FALSE
-
-# Load Distance
-library(Distance)
-```
 
 ## Objectives of the practical
 
@@ -53,38 +56,31 @@ The data is in a 'flat file' format and contains the following columns:
 
 Use the following command to import the data and then use the `head` command to ensure it has been imported correctly. 
 
-```{r, echo=T}
+```{r, echo=TRUE}
 # Read in data file
 birds <- read.csv("montrave-line.csv", header=T)
 ```
 
-```{r, echo=F}
+```{r, echo=answer, eval=answer}
 # Check data
-if (answer) {
-  cat('head(bird)','\n')
-  head(birds)
-}
+head(birds)
 ```
 
-To start with let's find out a bit about the data. 
+To start with, let's find out a bit about the data. 
 
 How many transects are there? The names of all the transect can be listed using:
 
-`unique(birds$Sample.Label)`
-
 \color{blue}
-```{r, echo=F}
-if (answer) unique(birds$Sample.Label)
+```{r, echo=TRUE, eval=answer}
+unique(birds$Sample.Label)
 ```
 \color{black}
 
 We can easily see that there are 19 transects in total, however, we can check by combining two commands:
 
-`length(unique(birds$Sample.Label))`
-
 \color{blue}
-```{r, echo=F}
-if (answer) length(unique(birds$Sample.Label))
+```{r, echo=TRUE, eval=answer}
+length(unique(birds$Sample.Label))
 ```
 \color{black}
 
@@ -97,10 +93,8 @@ tran.lab <- unique(birds$Sample.Label)
 
 The `table` command is a quick way to determine how many detections there are of each species: 
 
-`table(bird$species)`
-
 \color{blue}
-```{r, echo=F}
+```{r, echo=TRUE, eval=answer}
 # Number of detections by species
 table(birds$species)
 ```
@@ -113,9 +107,9 @@ Each of the line transects was visited twice which is not taken into account at 
 birds$Effort <- birds$Effort * birds$repeats
 ```
 
-## Manipulating the robins data
+## Manipulating the robin data
 
-For this analysis, we are interested in estimating the density of robins and so we select only these records:
+For the purposes of this practical, we are interested in estimating the density of robins and so we select only these records:
 
 ```{r, echo=T}
 # Select robins
@@ -124,11 +118,9 @@ robins <- birds[birds$species=="r", ]
 
 Now let's see how many transects on which robins were detected:
 
-`length(unique(robins$Sample.Label))`
-
 \color{blue}
-```{r, echo=F}
-if (answer) length(unique(robins$Sample.Label))
+```{r, echo=TRUE, eval=answer}
+length(unique(robins$Sample.Label))
 ```
 \color{black}
 
@@ -152,23 +144,21 @@ robin.lab <- unique(robins$Sample.Label)
 miss.lab <- tran.lab[!is.element(el=tran.lab, set=robin.lab)]
 ```
 
-What has this command done?
+To understand what this latter command has done, it  can be broken down into several elements:
 
 + elements of `tran.lab` are selected using `[]`
 
 + the `is.element` function (without the `!` symbol) selects the elements in `tran.lab`, which are also in the `set` argument (i.e. `robin.lab`)
 
-+ the `!` is used to select the elements in `tran.lab` that are not in `robin.lab`. 
++ the `!` is used to select the elements in `tran.lab` that are NOT in `robin.lab`. 
 
 \color{blue}
-```{r, echo=F}
+```{r, echo=F, eval=answer}
 # Transects missing from robin data
-if (answer) {
-  cat('Robins were detected on the following transects:','\n')
-  print(robin.lab)
-  cat('\n','Therefore missing transects are:','\n')
-  miss.lab
-}
+cat('Robins were detected on the following transects:','\n')
+print(robin.lab)
+cat('\n','Therefore missing transects are:','\n')
+miss.lab
 ```
 \color{black}
 
@@ -179,17 +169,15 @@ Now we know which transects are missing, we can select these records from the `b
 miss.data <- birds[is.element(birds$Sample.Label, miss.lab), ]
 ```
 
-However, the information about the transects are repeated in this new data frame because we have just selected all records for these transects. A quick check of the number of rows is: 
-
-`length(miss.data$Sample.Label)`
+However, the information about the transects are repeated in this new data frame because we have just selected all records for these transects. A quick check of the number of rows will confirm this: 
 
 \color{blue}
-```{r, echo=F}
-if (answer) length(miss.data$Sample.Label)
+```{r, echo=TRUE, eval=FALSE}
+length(miss.data$Sample.Label)
 ```
 \color{black}
 
-To get rid of duplicated rows use the command:
+To get rid of rows where `Sample.Label` is duplicated use the command:
 
 ```{r, echo=T}
 # Get rid of duplicated information
@@ -210,26 +198,24 @@ miss.data$visit <- rep(NA, 3)
 Check what `miss.data` looks like.
 
 \color{blue}
-```{r, echo=F}
-if (answer) miss.data
+```{r, echo=answer, eval=answer}
+miss.data
 ```
 \color{black}
 
-The final thing to do is to add `miss.data` to the `robins` data frame using the `rbind` function (this combines data frames with the same columns). 
+The final thing to do is to add the missing data (`miss.data`) to the `robins` data frame using the `rbind` function (this combines data frames with the same columns). 
 
 ```{r, echo=T}
 # Add missing transect info onto robin data
 robins <- rbind(robins, miss.data)
 ```
 
-Let's see the results of all this manipulation:
-
-`tail(robins)`
+Let's see the result of all this manipulation:
 
 \color{blue}
-```{r, echo=F}
+```{r, echo=TRUE, eval=answer}
 # See what that has done
-if (answer) tail(robins)
+tail(robins)
 ```
 \color{black}
 
@@ -244,26 +230,24 @@ robins <- robins[order(robins$Sample.Label), ]
 
 Before we fit any models, have a quick look at the histogram of distances:
 
-`hist(robins$distance, breaks=20)`
-
-```{r, echo=F, message=F, fig.height=3.5, fig.width=3.5}
-if (answer) hist(robins$distance, breaks=20)
+```{r, echo=TRUE, eval=answer, message=F, fig.height=3.5, fig.width=3.5}
+hist(robins$distance, breaks=20)
 ```
 
 In line with Buckland \textit{et al}. (2015), three different detection functions are fitted:
 
 ```{r, echo=T, message=FALSE}
 # Half normal with hermite poly adjustment
-robin.hn.herm <- ds(robins, truncation=95, transect="line", key="hn", adjustment="herm", 
-                    convert.units=0.1)
+robin.hn.herm <- ds(robins, truncation=95, transect="line", key="hn",
+                    adjustment="herm", convert.units=0.1)
 
 # Uniform with cosine adjustment
-robin.uni.cos <- ds(robins, truncation=95, transect="line", key="unif", adjustment="cos", 
-                    convert.units=0.1)
+robin.uni.cos <- ds(robins, truncation=95, transect="line", key="unif",
+                    adjustment="cos", convert.units=0.1)
 
 # Hazard rate with simple polynomial adjustment
-robin.haz.simp <- ds(robins, truncation=95, transect="line", key="hr", adjustment="poly", 
-                     convert.units=0.1)
+robin.haz.simp <- ds(robins, truncation=95, transect="line", key="hr",
+                     adjustment="poly", convert.units=0.1)
 ```
 
 ## Examining the `dht` object
@@ -272,11 +256,9 @@ As we have seen in a previous practical, the fitted model object (e.g. `robin.un
 
 To list the elements that are contained in `dht`, use the `names` function:
 
-`names(robin.uni.cos$dht)`
-
 \color{blue}
-```{r, echo=F}
-if (answer) names(robin.uni.cos$dht)
+```{r, echo=TRUE, eval=answer}
+names(robin.uni.cos$dht)
 ```
 \color{black}
 
@@ -284,11 +266,9 @@ Detections were of individual birds and so group size was not included in these 
 
 The estimates stored in the `individuals` object can be listed in a similar manner:
 
-`names(robin.uni.cos$dht$individuals)`
-
 \color{blue}
-```{r, echo=F}
-if (answer) names(robin.uni.cos$dht$individuals)
+```{r, echo=TRUE, eval=answer}
+names(robin.uni.cos$dht$individuals)
 ```
 \color{black}
 
@@ -296,23 +276,22 @@ To collect together the density estimates (and estimates of precision) from all 
 
 ```{r, echo=T}
 # Collect together results
-model.results <- rbind(robin.uni.cos$dht$individuals$D, robin.haz.simp$dht$individuals$D, 
+model.results <- rbind(robin.uni.cos$dht$individuals$D,
+                       robin.haz.simp$dht$individuals$D, 
                        robin.hn.herm$dht$individuals$D)
 ```
 
-Type the name of the new object to see how the results compare. 
-
-`model.results`
+Type the name of the new object to see how the estimates compare between the different detection function models. 
 
 \color{blue}
-```{r, echo=F}
-if (answer) model.results
+```{r, echo=answer, eval=answer}
+model.results
 ```
 \color{black}
 
 ## Goodness of fit
 
-Here we look at goodness of fit test with unequal bin intervals and just consider one fitted model. 
+Here we look at goodness of fit test with unequal bin intervals and just consider one of the fitted models. First we specify the required bin intervals.
 
 ```{r, echo=T, message=F}
 # Specify breaks - note irregular spacing
@@ -321,34 +300,28 @@ robin.brks <- c(0, 12.5, 22.5, 32.5, 42.5, 52.5, 62.5, 77.5, 95.0)
 
 Perform the tests:
 
-`ddf.gof(robin.uni.cos$ddf, breaks=robin.brks)`
-
 \color{blue}
-```{r, echo=F, fig.width=3.5, fig.height=3.5}
-if (answer) ddf.gof(robin.uni.cos$ddf, breaks=robin.brks)
+```{r, echo=TRUE, eval=answer, fig.width=3.5, fig.height=3.5}
+ddf.gof(robin.uni.cos$ddf, breaks=robin.brks)
 ```
 \color{black}
 
-## Customising detection function plot
+## Customising the detection function plot
 
 The `plot` function provides a basic plot of the fitted detection function overlaid onto the scaled distribution of distances:
 
-`plot(robin.uni.cos$ddf)`
-
 \color{blue}
-```{r, echo=F, fig.width=3.5, fig.height=3.5}
-if (answer) plot(robin.uni.cos$ddf)
+```{r, echo=TRUE, eval=answer, fig.width=3.5, fig.height=3.5}
+plot(robin.uni.cos)
 ```
 \color{black}
 
 However, the plot can be customised for reporting:
 
-`plot(robin.uni.cos$ddf, showpoints=FALSE, pl.den=10, lwd=2, breaks=robin.brks,`
-`     main="Uniform-cosine", xlab="Distance (m)")`
-     
-```{r, echo=F, message=F, fig.height=3.5, fig.width=3.5}
+```{r, echo=TRUE, eval=answer, message=F, fig.height=3.5, fig.width=3.5}
 # Plot detection function
-if (answer) plot(robin.uni.cos$ddf, showpoints=FALSE, pl.den=10, lwd=2, breaks=robin.brks, main="Uniform-cosine", xlab="Distance (m)")
+plot(robin.uni.cos, showpoints=FALSE, pl.den=10, lwd=2, breaks=robin.brks,
+     main="Uniform-cosine", xlab="Distance (m)")
 ```
 
 The arguments are:

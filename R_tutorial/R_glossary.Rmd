@@ -1,35 +1,37 @@
 ---
-title: 'Brief introduction to R: Glossary'
+fontsize: 12pt
+title: Introduction to R for distance sampling
+author: Centre for Research into Ecological and Environmental Modelling
+subtitle: Workshop, 26 August 2018
 output: pdf_document
-subtitle: 'L Burt Feb 2018'
 ---
+
+# Glossary of R terms and characters
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-This document is meant as a quick reference guide to some of the special characters used in `R`. It is not a guide to the functions used throughout the course.  
+This document is meant as a quick reference guide to some of the terms and special characters used in `R`. It is not a guide to the functions used throughout the course.  
 
 R is freely available and can be downloaded from https://cran.r-project.org/. There are versions for Windows and Mac users. 
 
-A useful tutorial to work through is at 'tryr.codeschool.com'. The following is a useful resource for `tidyverse` https://www.tidyverse.org/learn/.
+## Terminology
 
-## Glossary
+\textbf{arguments/default values} - parameters that need to be specified by the user in order to execute a function. Some arguments may have pre-specified, or default, values and so don't need to be changed unless different options are required. 
 
-arguments/default values - parameters that need to be specified by the user in order to execute a function. Some arguments may have pre-specified, or default, values
+\textbf{function} - collection of `R` commands to perform a particular task. Can be in-built (e.g. `mean`) or written by the user.
 
-function - collection of `R` commands to perform a particular task. Can be in-built (e.g. `mean`) or written by the user
+\textbf{package} - collection of functions.
 
-package - collection of functions
+\textbf{Rstudio} - graphical user interface to `R`.
 
-Rstudio - interface to `R`
+\textbf{working directory} - directory specified by user and subsequently used, for example, to read files from or to save files to. 
 
-working directory - directory specified by user and subsequently used, for example, to read files from or to save files to  
-
-workspace - file containing data objects created during R session. Has filename suffix '.RData' by default (but can be changed by user.)
+\textbf{workspace} - file containing data objects created during R session. Has filename suffix '.RData' by default, but this can be changed by user.
 
 ## Useful commands
 
-`setwd` function - sets the working directory (i.e. `setwd("C:/mt1007/R")`)
+`setwd` function - sets the working directory (i.e. `setwd("C:/mt1007/R")`). 
 
 `getwd()` - returns the working directory
 
@@ -41,6 +43,18 @@ workspace - file containing data objects created during R session. Has filename 
 
 `help` function - provides details about the specified function and what arguments it requires (i.e. `help(sample)`)
 
+## Useful menu items in RStudio
+
+Some of the basic commands in R used to navigate your directories can be performed using the menu items in RStudio. A few are listed below. 
+
+\textbf{File > Open file} - opens file (this could be an `.rmd' file or a text file containing R commands)
+
+\textbf{File > Save} - saves the active file. 
+
+\textbf{Session > Set working directory > Choose directory} - sets the working directory
+
+\textbf{Session > Load workspace} - loads the chosen `.RData` file
+
 ## Special characters
 
 `+`,`-`,`*`,`/` arithmetric operators
@@ -51,7 +65,7 @@ workspace - file containing data objects created during R session. Has filename 
 
 `[]`  used for selection (e.g. `x[1]` selects first element of a vector `x`) 
 
-`[rows, columns]` - used for selection of a dataframe where `rows` is the criteria for selecting rows and `columns is the criteria for selecting the columns
+`[rows, columns]` - used for selection of a dataframe where `rows` is the criteria for selecting rows and `columns` is the criteria for selecting the columns
 
 `&` intersection, 'and' 
 

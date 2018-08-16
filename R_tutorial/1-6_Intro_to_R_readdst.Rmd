@@ -1,10 +1,13 @@
 ---
 title: Introduction to R for distance sampling
 header-includes: \usepackage{color}
+author: Centre for Research into Ecological and Environmental Modelling
+subtitle: Workshop, 26 August 2018
 output: pdf_document
+fontsize: 12pt
 ---
 
-# 6. Exporting 'Distance for Windows' projects to R using `readdst`
+# 1.6 Exporting 'Distance for Windows' projects to R using `readdst`
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)

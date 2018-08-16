@@ -1,17 +1,20 @@
 ---
 output: pdf_document
+fontsize: 12pt
 title: Introduction to R for distance sampling
+author: Centre for Research into Ecological and Environmental Modelling
+subtitle: Workshop, 26 August 2018
 header-includes: \usepackage{color}
 ---
 
-# 1. R basics
+# 1.1 R basics
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 # Specify whether answers are shown 
-answer <- TRUE
-#answer <- FALSE
+#answer <- TRUE
+answer <- FALSE
 ```
 
 ```{r, echo=F}
@@ -31,6 +34,8 @@ Throughout these practicals, `R` commands are shown in `courier font` and text i
 # This is an example of a comment 
 ```
 
+A glossary is provided as a quick reference to some of the terms and special characters used in R.  
+
 ## Objectives of this practical
 
 1. Introduction to `R` and `RStudio`. 
@@ -45,9 +50,9 @@ Throughout these practicals, `R` commands are shown in `courier font` and text i
 
 ## Introduction to `RStudio` 
 
-`RStudio` is a graphical user interface (GUI) to `R`; a major advantage of using `RStudio` is that it makes it easy to type `R` code into a script window which can be saved and also sent to the `R` command line to be run. This section describes how to open and use the user-interface `RStudio`.
+`RStudio` is a graphical user interface (GUI) to `R`; a major advantage of using `RStudio` is that it makes it easy to type `R` code into a script window which can be sent to the `R` command line to be executed and can also be saved (and hence retrieved). This section describes how to open and use the user-interface `RStudio`.
 
-Check that `RStudio` and `R` have been installed on your computer; for this course we are using versions INCLUDE VERSIONS. When you open an `RStudio` session, the window will likely be similar to that shown in Figure 1. 
+Check that `RStudio` and `R` have been installed on your computer; for this course we are using R version 3.5.1. When you open an `RStudio` session, the window will likely be similar to that shown in Figure 1. 
 
 ![R-Studio screenshot](Rstudio_screenshot.png)
 
@@ -69,11 +74,13 @@ Directly below the script panel is the `R` console window. `R` is the program th
 
 + to run code from your script window, move the cursor to the line of code to be run and click the 'Run' button in the top right of the script window, 
 
++ or use keyboard shortcuts for Windows = Ctrl+Enter, for Mac/Linux = command+enter, 
+
 + copy the commands from the script panel and paste them into the `R` console panel at the `>` symbol, 
 
 + type commands directly into the console panel at the `>` symbol.  
 
-The top right panel contains two tabs, Environment and History. The Environment tab shows all the objects and functions that have been imported and created in the `R` workspace. Upon exiting `RStudio`, the `R` workspace can be saved and then retrieved at a later date. An `R` object could be data that has been imported into `R` or objects created within 'R' during an analysis. Also, if you create a function (a collection of commands) during your work session, these will also be listed on the Environment tab. The History tab shows all of the `R` code that has been run during the session; this is useful if you want to repeat or check a command.
+The top right panel contains two tabs, Environment and History. The Environment tab shows all the objects and functions that have been imported and created in the `R` workspace. Upon exiting `RStudio`, the `R` workspace can be saved and then retrieved at a later date. An `R` object could be data that has been imported into `R` or objects created within `R` during an analysis. Also, if you create a function (a collection of commands) during your work session, these will also be listed on the Environment tab. The History tab shows all of the `R` code that has been run during the session; this is useful if you want to repeat or check a command.
 
 In the bottom right panel there is the Packages tab; `R` packages are collections of functions which provide tools required to perform particular tasks. For the majority of the practicals for this course, additional packages will not have to be loaded. The Plots tab displays plots produced during the 'R' session. There is also a tab displaying details associated with in-built `R` functions; the help tab is very useful (see below). Finally, there is a Files tab; this tab lists files available in a particular (i.e. working) directory. The user can point `R` to a particular directory; this is called the working directory (more on this later). 
 
@@ -81,11 +88,15 @@ In the bottom right panel there is the Packages tab; `R` packages are collection
 
 There is a help facility in `R` which provides details about functions and packages. For example, to learn about the function `round` and what arguments it requires, type the following at the `>` in the console tab:
 
-`help(round)`
+```{r, echo=TRUE, eval=FALSE}
+help(round)
+```
 
 or alternatively,
 
-`?round`
+```{r, echo=TRUE, eval=FALSE}
+?round
+```
 
 The description of the function will appear on the Help tab (bottom right). Help is available for any in-built function.
 
@@ -93,14 +104,14 @@ The description of the function will appear on the Help tab (bottom right). Help
 
 To get started, we will generate some data, pretending it is a set of perpendicular distances, and analyse it using basic commands. Below is a command to generate some data - this is fairly complicated but, for now, just copy and paste, or type, the command into the console window. 
 
-```{r, echo=TRUE}
+```{r, echo=TRUE, eval=TRUE}
 # Generate values from a normal distribution
 dists <- rnorm(n=50, mean=0, sd=3)
 ```
 
 At the moment, the syntax of this command can be ignored and will be explained as you work through the practical, nevertheless, what has this command done? It has: 
 
-+ generated 50 random values from a Normal distribution (using the `rnorm` function) that has a mean of 0 and standard deviation of 3 (i.e. $N(\mu=0,  \sigma^2=3.5^2)$) 
++ generated 50 random values from a Normal distribution (using the `rnorm` function) that has a mean of 0 and standard deviation of 3 (i.e. $N(\mu=0,  \sigma^2=3^2)$) 
 
 + stored the values in an object called `dists`.
 
@@ -112,79 +123,60 @@ Having generated some data, the first thing to do is summarise and plot it.
 
 Typing the name of an object (in this case `dists`) will list the object on the screen i.e.
 
-`dists`
-
 \color{blue}
-```{r, echo=T}
+```{r, echo=TRUE, eval=answer}
 # Display the numbers in object dists
-if (answer) dists
+dists
 ```
 \color{black}
 
-Listing all the data is not very helpful, especially if there is a lot of it, but there are ways to display a subset of it. 
+Listing all the data is not very helpful, especially if there is a lot of data, but there are ways to display a subset of it. 
 
 Display the first six values:
 
-`head(dists)`
-
 \color{blue}
-```{r, echo=F}
-if (answer) head(dists)
+```{r, echo=TRUE, eval=answer}
+head(dists)
 ```
 \color{black}
 
 Another way to do display the first six values is to select which values to display, for example in the command below the second to eighth value, inclusive,  will be displayed, 
 
-`dists[2:8]`
-
 \color{blue}
-```{r, echo=F}
-if (answer) dists[2:8]
+```{r, echo=TRUE, eval=answer}
+dists[2:8]
 ```
 \color{black}
 
 Listing all (or a few) of the numbers is helpful to see what it looks like but is not very helpful to get an overall picture and so we can use in-built `R` functions to help summarise it. Mostly, the function names are fairly intuitive:
 
-`mean(dists)`
-
 \color{blue}
-```{r, echo=F}
-# Obtain the mean
-if (answer) mean(dists)
+```{r, echo=TRUE, eval=answer}
+mean(dists)
 ```
 \color{black}
 
 The mean should be zero, or very close to zero, since we specified a mean of zero to generate the data. Other useful functions are given below. 
 
-`min(dists)`
-
 \color{blue}
-```{r, echo=F}
+```{r, echo=TRUE, eval=answer}
 # Minimum value (remember negative values are on the left of the trackline)
-if (answer) {
-  cat('The minimum value is ',format(min(dists)),'.','\n')
-  cat('Remember negative values are on the left of the trackline.')
-}
+min(dists)
 ```
 \color{black}
 
-`max(dists)`
-
 \color{blue}
-```{r, echo=F}
-# Maximum value 
-if (answer) cat('The maximum value is ',format(max(dists)),'.','\n')
-
+```{r, echo=TRUE, eval=answer}
+# Maximum value (positive values on the right of the trackline)
+max(dists)
 ```
 \color{black}
 
 All the above information, and more, is provided in one command as follows:
 
-`summary(dists)`
-
 \color{blue}
-```{r, echo=F}
-if (answer) summary(dists)
+```{r, echo=TRUE, eval=answer}
+summary(dists)
 ```
 \color{black}
 
@@ -192,36 +184,28 @@ if (answer) summary(dists)
 
 A key component of distance sampling is the histogram and we can plot our data using the `hist` function:
 
-`hist(dists)`
-
-```{r, echo=F, fig.height=3.5, fig.width=3.5}
+```{r, echo=TRUE, eval=answer, fig.height=3.5, fig.width=3.5}
 # Plot a histogram
-if (answer) hist(dists)
+hist(dists)
 ```
 
-Functions often have arguments which are specified by default and hence do not need to be specified by the user, unless the user wishes to change the default values. For example, the number of intervals in a histogram can be changed using the `breaks` argument. 
-
-`hist(dists, breaks=15)`
+Functions often have arguments which are specified by default and hence do not need to be specified by the user, unless the user wishes to change the default values. For example, the number of intervals in a histogram can be changed using the `breaks` argument (see command below). 
 
 Note if we provide a number of intervals for the `breaks` argument, it doesn't always give the specified number of intervals - it works out useful/pretty intervals. Later in the practical we will specify the bin intervals. 
 
 We can add a vertical (`v=`), red line to the histogram to indicate the transect centre line:
 
-`abline(v=0, col="red")`
-
-```{r, echo=F, fig.height=3.5, fig.width=3.5}
-if (answer) {
+```{r, echo=TRUE, eval=answer, fig.height=3.5, fig.width=3.5}
 # Plot a histogram with more intervals (but not always the number specified)
-  hist(dists, breaks=15)
+hist(dists, breaks=15)
 
 # Add a centre line
-  abline(v=0, col="red")
-}
+abline(v=0, col="red")
 ```
 
 In distance sampling, the left and right of the centre line are not differentiated and so to continue we want to ignore the sign of the values and convert negative values to positive values. The command below does this:
 
-```{r, echo=T, fig.height=3.5, fig.width=3.5}
+```{r, echo=TRUE, fig.height=3.5, fig.width=3.5}
 posdists <- abs(dists)
 ```
 
@@ -233,25 +217,18 @@ The command can be broken down as follows
 
 Plot a histogram of the new object and also specify a label for the $x$-axis using the `xlab` argument:
 
-`hist(posdists, xlab="Distance")`
-
-```{r, echo=F, fig.height=3.5, fig.width=3.5}
+```{r, echo=TRUE, eval=answer, fig.height=3.5, fig.width=3.5}
 # Plot a histogram of the new object
-if (answer) hist(posdists, xlab="Distance")
+hist(posdists, xlab="Distance")
 ```
 
 To specify the bin intervals, first we create the required intervals by generating a sequence of numbers (i.e. 0, 0.5, 1, ..., 8) and then using them in the `hist` command:
 
-`setbrks <- seq(from=0, to=8, by=0.5)`
-
-`hist(posdists, breaks=setbrks, xlab="Distance")`
-
-```{r, echo=F, fig.height=3.5, fig.width=3.5}
-# Plot a histogram of the new object
-if (answer) {
-  setbrks <- seq(from=0, to=8, by=0.5)
-  hist(posdists, breaks=setbrks, xlab="Distance")
-}
+```{r, echo=TRUE, eval=answer, fig.height=3.5, fig.width=3.5}
+# Create break points for bin intervals
+setbrks <- seq(from=0, to=8, by=0.5)
+# Histogram of distances with set bin intervals
+hist(posdists, breaks=setbrks, xlab="Distance")
 ```
 
 ## R as a calculator
@@ -263,17 +240,19 @@ A naive estimate of the probability of detection, $\hat p$, can be obtained from
 $$ \hat p = \frac {n} {N} $$
 We know what $n$ is, this is just the number of values we generated (i.e. $n$=50) but let's check with the `length` function and then assign it to a new object `n`:
 
-`length(dists)`
+```{r, echo=T, eval=answer}
+# Check number of observations
+length(dists)
+```
 
-`n <- length(dists)`
+```{r, echo=T, eval=T}
+# Assign n
+n <- length(dists)
+```
 
 \color{blue}
-```{r, echo=F}
-if (answer) {
-# Assign n
-  n <- length(dists)
-  cat('The number of observations, n = ',n)
-}
+```{r, echo=F, eval=answer}
+cat('The number of observations, n = ',n)
 ```
 \color{black}
 
@@ -281,6 +260,7 @@ The parameter $N$ can be obtained using the histogram as shown below; read off t
 
 ```{r, echo=F, fig.height=3.5, fig.width=3.5}
 # Illustrate the total number
+setbrks <- seq(from=0, to=8, by=0.5)
 temp <- hist(posdists, breaks=setbrks, plot=F)
 maxy <- max(temp$counts)
 maxx <- max(temp$breaks)
@@ -301,8 +281,8 @@ Now, estimate the probability of detection:
 phat <- n/N
 ```
 \color{blue}
-```{r, echo=F}
-if (answer) cat('Estimated probability of detection is ',format(phat),'.')
+```{r, echo=F, eval=answer}
+cat('Estimated probability of detection is ',format(phat),'.')
 ```
 \color{black}
 
@@ -310,7 +290,7 @@ Make a note of your estimate; we will compare this with an estimate obtained by 
 
 ## Data selection
 
-Selecting a subset of data is a frequent data manipulation that is required and as shown above, square brackets (i.e. `[]`) are frequently used. In a distance sampling context, we may want to exclude distances in the righthand tail of the distribution.
+Selecting a subset of data is a frequent data manipulation that is required and as shown previously, square brackets (i.e. `[]`) are frequently used. In a distance sampling context, we may want to exclude distances in the right hand tail of the distribution.
 
 In the command below, `truncdists` is created by selecting only distances that are less than or equal to 6 (i.e. `<= 6`). 
 
@@ -319,104 +299,101 @@ In the command below, `truncdists` is created by selecting only distances that a
 truncdists <- posdists[posdists <= 6]
 ```
 
-How does this affect the probability of detection? 
+How does this affect the probability of detection? Note that your $N$ will also change. 
 
 \color{blue}
-```{r, echo=F, fig.width=3.5, fig.width=3.5}
-if (answer) {
-  cat('truncn <- length(truncdists)','\n\n')
+```{r, echo=F, eval=answer, fig.width=3.5, fig.width=3.5}
+cat('truncn <- length(truncdists)','\n\n')
 #  cat('truncn','\n')
 
 # Number of objects seen within truncation distance
-  truncn <- length(truncdists)
-  cat('The number of distances <=6 is ',truncn,'\n')
+truncn <- length(truncdists)
+cat('The number of distances <=6 is ',truncn,'\n')
 # How many objects if detection was certain
-  setbrks <- seq(0,6,0.5)
-  cat('hist(truncdists, breaks=seq(0, 6, 0.5), xlab="Distance", main="")','\n')
-  temp <- hist(truncdists, breaks=setbrks, plot=F)
-  maxy <- max(temp$counts)
-  maxx <- 6
-  hist(truncdists, breaks=setbrks, density=5, xlab="Distance", main="")
-  abline(v=maxx, col=4, lwd=2)
-  abline(h=maxy, col=4, lwd=2)  
-  truncN <- 9 * 12
-  cat('truncN <- 9 * 12','\n')
+setbrks <- seq(0,6,0.5)
+cat('hist(truncdists, breaks=seq(0, 6, 0.5), xlab="Distance", main="")','\n')
+temp <- hist(truncdists, breaks=setbrks, plot=F)
+maxy <- max(temp$counts)
+maxx <- 6
+hist(truncdists, breaks=setbrks, density=5, xlab="Distance", main="")
+abline(v=maxx, col=4, lwd=2)
+abline(h=maxy, col=4, lwd=2)  
+truncN <- 9 * 12
+cat('truncN <- 9 * 12','\n')
 # Probability of detection
-  cat('truncp <- truncn/truncN','\n')
-  truncp <- truncn/truncN
-  cat('The prob. of detection with truncation is ',format(truncp),'.')
-}
+cat('truncp <- truncn/truncN','\n')
+truncp <- truncn/truncN
+cat('The prob. of detection with truncation is ',format(truncp),'.')
 ```
 \color{black}
 
 ## Using `Distance` to fit a detection function model
 
-There are hundreds of R packages and so for efficiency the more specialised packages are not installed as standard when R is downloaded onto your computer. To check whether the  `Distance` package (Miller 2017) is installed on your laptop, click on the 'Packages' tab (lower right pane) and see if it is listed. If so, then either click in the tick box or load it using the command
+Above we have calculated a naive estimate of the detection probability, however, we can use the `Distance` package (Miller 2017) to obtain a more robust estimate. 
 
-`library(Distance)`
+There are hundreds of R packages and so for efficiency the more specialised packages are not installed as standard when R is downloaded onto your computer. To check whether the `Distance` package is installed on your laptop, click on the 'Packages' tab (lower right pane) and see if it is listed. If so, then either click in the tick box or load it using the command
 
-If it is not listed, then it can easily be downloaded using the 'Install' tool. Note that each time you start a new R session and wish to use `Distance`, you will need to load it. 
-
-```{r, echo=F, message=FALSE}
+```{r, echo=TRUE, message=FALSE}
 # Load R library for distance sampling
 library(Distance)
 ```
 
+If it is not listed, then it can easily be downloaded using the 'Install' tool. Note that each time you start a new R session and wish to use `Distance`, you will need to load it. 
+
 The function `ds` fits a detection function and calculates abundance from both line or point transects. In this example, we don't have any areas required to calculate density and abundance and just want to estimate the probability of detection. The distances were generated from a Normal distribution and so a half-normal key function is specified (with the argument (`key="hn"`) with no adjustment terms (`adjustment=NULL`). 
 
-`ds(posdists, key="hn", adjustment=NULL)`
+```{r, echo=TRUE, eval=FALSE}
+# Fit HN model, no adjustments terms
+ds(posdists, key="hn", adjustment=NULL)
+```
+If we want to save the output so that we can interrogate it later, then we can assign the output to an object (`dsmodel`) as follows (the `quiet=TRUE` suppresses any message being printed):
 
-If we want to save the output so that we can interrogate it later, then we can assign the output to an object (`dsmodel`) as follows: 
-
-`dsmodel <- ds(posdists, key="hn", adjustment=NULL)`
-
-```{r, echo=F, warning=F, message=F}
+```{r, echo=TRUE, eval=answer, warning=F, message=F}
 # Fit a half-normal detection function
-if (answer) dsmodel <- ds(posdists, key="hn", adjustment=NULL, quiet=T)
+dsmodel <- ds(posdists, key="hn", adjustment=NULL, quiet=TRUE)
 ```
 
-To examine the detection function, use the`summary` function. The `summary` function is a generic function and selects a relevant 'summary' based on the object. 
-
-`summary(dsmodel)`
+To examine the detection function, use the `summary` function. The `summary` function is a generic function and selects a relevant 'summary' based on the type of the object, in this case a distance sampling model object. 
 
 \color{blue}
-```{r, echo=F}
+```{r, echo=TRUE, eval=answer}
 # Summary of detection function
-if (answer) summary(dsmodel)
+summary(dsmodel)
 ```
 \color{black}
 
 Was your crude estimate for $p$ close to the model estimate? 
 
-The function `plot` is a generic function which can be used to plot the detection function;
+The function `plot` is a generic function which can be used to plot the detection function:
 
-`plot(dsmodel)`
-
-```{r, echo=F, fig.height=3.5, fig.width=3.5}
+```{r, echo=TRUE, eval=answer, fig.height=3.5, fig.width=3.5}
 # Plot detection function
-if (answer) plot(dsmodel)
+plot(dsmodel)
 ```
 
 To truncate the distances, then the `truncation` argument in `ds` can be used:
 
-`dstrunc <- ds(posdists, key="hn", truncation=6)`
+```{r, echo=TRUE, eval=answer, message=F }
+# Fit HN model with truncation at 6
+dstrunc <- ds(posdists, key="hn", adjustment=NULL, truncation=6)
+```
 
-`summary(dstrunc)`
+```{r, echo=TRUE, eval=FALSE}
+# Summary of model
+summary(dstrunc)
+```
 
 \color{blue}
-```{r, echo=F, message=F, fig.height=3.5, fig.width=3.5}
-# Fit a half-normal detection function, right truncation distances at 6
-if (answer) {
-  dstrunc <- ds(posdists, key="hn", truncation=6, quiet=T)
-  print(summary(dstrunc))
-  plot(dstrunc)
-}
+```{r, echo=F, eval=answer, message=F, fig.height=3.5, fig.width=3.5}
+# Summary of model and plot
+summary(dstrunc)
+plot(dstrunc)
 ```
 \color{black}
 
 Is this similar to your crude estimate when you used truncation? 
 
-In the next practical, we will use real data. 
+In the next practical, we will use data from an actual survey. 
 
 ### References
 
