@@ -19,8 +19,8 @@ DSM model checking                                      |  [HTML](slides/dsm3-mo
 Multivariate smoothing, model selection                 |  [HTML](slides/dsm4-multiple-smooths.html)    |                                        |[Rmd](slides/dsm4-multiple-smooths.Rmd)
 DSM predictions and variance                            |  [HTML](slides/dsm5-prediction-variance.html) |                                        |[Rmd](slides/dsm5-prediction-variance.Rmd)
 DSM practical advice and advanced topics                |  [HTML](slides/dsm6-practical-advice.html)    |                                        |[Rmd](slides/dsm6-practical-advice.Rmd)
-Simulation of distance sampling                         |                                               | [PDF](slides/Lecture9DSsim.pdf)        |
 Estimation with incomplete detection at distance zero   |                                               | [PDF](slides/mrds1-g0.pdf)             |
 Mark-recapture distance sampling (MRDS) in Distance 7.1 |                                               | [PDF](slides/mrds2-mrds-Distance.pdf)  |
+Simulation of distance sampling                         |                                               | [PDF](slides/Lecture9DSsim.pdf)        |
 
 
