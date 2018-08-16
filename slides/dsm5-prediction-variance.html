@@ -409,16 +409,27 @@ $$
 
 ---
 
+
 # Variance propagation
 
+- Refit model with "extra" term
+
+`\(\mathbb{E}\left[n_{j}\right]=A_{j}\hat{p}(\boldsymbol{\theta}, z_{j}) \exp\left[ X_{j}\boldsymbol{\beta}+\color{red}{\left.\frac{d\log p\left(\boldsymbol{\theta},z_{j}\right)}{d\boldsymbol{\theta}}\right|_{\boldsymbol{\theta}=\boldsymbol{\theta}_{0}} \boldsymbol{\delta}}\right]\)`
+
+- where `\(\boldsymbol{\delta}\)` is a *random effect*
+- fix covariance matrix s.t. `\(\boldsymbol{\delta} \sim N(0,-\mathbf{H}^{-1}_\theta)\)`
+- `\(\mathbf{H}_\theta\)` is Hessian from detection function
+
+
+---
+
+# Variance propagation
 
 - Include the detectability as term in GAM
 - Random effect, mean zero, variance of detection function
 - Uncertainty "propagated" through the model
-- Details in bibliography (too much to detail here)
-- Under development
+- Paper in bibliography (too much to detail here)
 - (Can cover in special topic)
-
 
 ---
 
