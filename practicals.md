@@ -16,14 +16,14 @@ Note that the practicals are designed to be run sequentially, files generated fr
 
 Number | Practical Description                            | Practical                                                                                 | Solution                                                                                                      |
 -------|--------------------------------------------------|-------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|
-1      | R tutorial (see [this page](../R_tutorial.html)  |                                                                                           |                                                                                                               |
+1      | R tutorial (see [this page](R_tutorial.html)     |                                                                                           |                                                                                                               |
 2      | Processing sperm whale data                      | [Rmd](practicals/02-process-geodata.Rmd)     [PDF](practicals/02-process-geodata.pdf)     |                                                                                                               |
 3      | Fitting detection functions                      | [Rmd](practicals/03-detection-functions.Rmd) [PDF](practicals/03-detection-functions.pdf) | [Rmd](practicals/03-detection-functions-solutions.Rmd) [PDF](practicals/03-detection-functions-solutions.pdf) |
 4      | Fitting DSMs                                     | [Rmd](practicals/04-simple-dsms.Rmd)         [PDF](practicals/04-simple-dsms.pdf)         | [Rmd](practicals/04-simple-dsms-solutions.Rmd)         [PDF](practicals/04-simple-dsms-solutions.pdf)         |
 5      | Multiple term DSMs, model checking and selection | [Rmd](practicals/05-advanced-dsms.Rmd)       [PDF](practicals/05-advanced-dsms.pdf)       | [Rmd](practicals/05-advanced-dsms-solutions.Rmd)       [PDF](practicals/05-advanced-dsms-solutions.pdf)       |
 6      | DSM Prediction                                   | [Rmd](practicals/06-prediction.Rmd)          [PDF](practicals/06-prediction.pdf)          | [Rmd](practicals/06-prediction-solutions.Rmd)          [PDF](practicals/06-prediction-solutions.pdf)          |
 7      | DSM Variance                                     | [Rmd](practicals/07-variance.Rmd)            [PDF](practicals/07-variance.pdf)            | [Rmd](practicals/07-variance-solutions.Rmd)            [PDF](practicals/07-variance-solutions.pdf)            |
-8      | Mark-recapture distance sampling                 | [Rmd](practicals/08-mrds-in-R.Rmd) [R PDF](practicals/08-mrds-in-R.pdf) [Distance PDF](08-mrds_in_Distance.pdf) | [PDF](practicals/08-mrds_solution.pdf) |
+8      | Mark-recapture distance sampling                 | [Rmd](practicals/08-mrds-in-R.Rmd) [R PDF](practicals/08-mrds-in-R.pdf) [Distance PDF](practicals/08-mrds_in_Distance.pdf) | [PDF](practicals/08-mrds_solution.pdf) |
 9      | Simulation of distance sampling data             | [Rmd](practicals/04-dssim.Rmd)                     |  |
 
 ## Data sets 

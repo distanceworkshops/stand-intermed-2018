@@ -32,7 +32,7 @@ The first day of the workshop will review fundamental principles of distance sam
 
 ## Refresher of distance sampling concepts
 
-To remind you about fundamentals of distance sampling, we have [posted the lecture notes and practicals](Introductory distance sampling workshop.pdf) (without data to complete them) from former introductory distance sampling workshops.  Thumb through these to remind yourself about distance sampling concepts.  Some of these lectures are also [available in video format](http://distancesampling.org/videos.html).
+The introductory distance sampling course (previously delivered in St Andrews) is [now online for free](https://workshops.distancesampling.org/online-course/). Participants should be familiar with these concepts prior to the course.
 
 ## Software
 
@@ -68,13 +68,6 @@ Several participants have noted they are unfamiliar with R and RStudio.  There a
     - DataCamp's [tutorial working with RStudio](https://www.datacamp.com/courses/working-with-the-rstudio-ide-part-1)
 *  Tutorial prior to the distance sampling workshop
     - we will spend Sunday (26th August) working through a tutorial that will be available as part of the workshop practical exercises
-
-
-### Reporting bugs, suggesting improvements
-
-If during the course you encounter bugs in Distance or the distance sampling R packages, or if you have suggestions for improvements in our software, you can report these using the following Google Form. Please try to include as much information as possible.
-
-**[Bug reports and suggestions](https://docs.google.com/forms/d/14ipIeUiiLegvFWq8nnzkOONdN9j_n4Q4ZeJ1dzWZEfc/)**
 
 
 ### ArcGIS

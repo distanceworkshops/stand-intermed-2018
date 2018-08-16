@@ -12,14 +12,14 @@ Practicals are provided in [RMarkdown](http://rmarkdown.rstudio.com/index.html) 
 
 HTML and PDF versions of all practicals is provided below.
 
-Number | Practical Description        | Exercise                                               | PDF                                                    | Data file                                     |
--------|------------------------------|--------------------------------------------------------|--------------------------------------------------------|-----------------------------------------------|
-  1    | R basics                     | [Rmd](R_tutorial/1-1_Intro_to_R_basics.Rmd)            | [PDF](R_tutorial/1-1_Intro_to_R_basics.pdf)            |                                               |
-  2    | Real data in R               | [Rmd](R_tutorial/1-2_Intro_to_R_real_data.Rmd)         | [PDF](R_tutorial/1-2_Intro_to_R_real_data.pdf)         | [`ducknests`](R_tutorial/ducknests.csv)       |
-  3    | Using covariates             | [Rmd](R_tutorial/1-3_Intro_to_R_covars.Rmd)            | [PDF](R_tutorial/1-3_Intro_to_R_covars.pdf)            | [`amakihi`](R_tutorial/amakihi.csv)           |
-  4    | GLMs, prediction, bootstraps | [Rmd](R_tutorial/1-4_Intro_to_R_glms.Rmd)              | [PDF](R_tutorial/1-4_Intro_to_R_glms.pdf)              | [`crossbills`](R_tutorial/lure-trials.csv)    |
-  5    | `data.frame` manipulation    | [Rmd](R_tutorial/1-5_Intro_to_R_data_manipulation.Rmd) | [PDF](R_tutorial/1-5_Intro_to_R_data_manipulation.pdf) | [`montrave`](R_tutorial/montrave-line.csv)    |
-  6    | Importing Distance projects  | [Rmd](R_tutorial/1-6_Intro_to_R_readdst.Rmd)           | [PDF](R_tutorial/1-6_Intro_to_R_readdst.pdf)           | [`ducknest.dst`](R_tutorial/ducknests.zip     |
+Number | Practical Description        | Exercise                                                                                                      | Solution                                               | Data file                                     |
+-------|------------------------------|---------------------------------------------------------------------------------------------------------------|--------------------------------------------------------|-----------------------------------------------|
+  1    | R basics                     | [Rmd](R_tutorial/1-1_Intro_to_R_basics.Rmd)           [PDF](R_tutorial/1-1_Intro_to_R_basics.pdf)             | [PDF](R_tutorial/1-1_Intro_to_R_basics_solutions.pdf)            |                                               |
+  2    | Real data in R               | [Rmd](R_tutorial/1-2_Intro_to_R_real_data.Rmd)        [PDF](R_tutorial/1-2_Intro_to_R_real_data.pdf)          | [PDF](R_tutorial/1-2_Intro_to_R_real_data_solutions.pdf)         | [`ducknests`](R_tutorial/ducknests.csv)       |
+  3    | Using covariates             | [Rmd](R_tutorial/1-3_Intro_to_R_covars.Rmd)           [PDF](R_tutorial/1-3_Intro_to_R_covars.pdf)             | [PDF](R_tutorial/1-3_Intro_to_R_covars_solutions.pdf)            | [`amakihi`](R_tutorial/amakihi.csv)           |
+  4    | GLMs, prediction, bootstraps | [Rmd](R_tutorial/1-4_Intro_to_R_glms.Rmd)             [PDF](R_tutorial/1-4_Intro_to_R_glms.pdf)               | [PDF](R_tutorial/1-4_Intro_to_R_glms_solutions.pdf)              | [`crossbills`](R_tutorial/lure-trials.csv)    |
+  5    | `data.frame` manipulation    | [Rmd](R_tutorial/1-5_Intro_to_R_data_manipulation.Rmd)[PDF](R_tutorial/1-5_Intro_to_R_data_manipulation.pdf)  | [PDF](R_tutorial/1-5_Intro_to_R_data_manipulation_solutions.pdf) | [`montrave`](R_tutorial/montrave-line.csv)    |
+  6    | Importing Distance projects  | [Rmd](R_tutorial/1-6_Intro_to_R_readdst.Rmd)          [PDF](R_tutorial/1-6_Intro_to_R_readdst.pdf)            | [PDF](R_tutorial/1-6_Intro_to_R_readdst_solutions.pdf)           | [`ducknest.dst`](R_tutorial/ducknests.zip     |
 
 
 
