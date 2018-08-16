@@ -196,6 +196,7 @@ Cannonical reference is Wood (2006)
 * Propagating variance from the detection function
   * Williams, R., Hedley, S. L., Branch, T. A., Bravington, M. V., Zerbini, A. N., & Findlay, K. P. (2011). Chilean blue whales as a case study to illustrate methods to estimate abundance and evaluate conservation status of rare species. Conservation Biology, 25(3), 526–535. http://doi.org/10.1111/j.1523-1739.2011.01656.x
   * Appendix B of Miller et al (2013) [available on DLM's website](http://converged.yt/papers/dsm-paper-AppendixB.pdf) (more technical)
+  * Bravington, M. V., Miller, D. L. and Hedley, S. L. Reliable variance propagation for spatial density surface models [available on arXiv](https://arxiv.org/abs/1807.07996)
 * (Re-iterating from above) How can we just add the squared CVs?
   * Goodman, L. A. (1960). On the exact variance of products. Journal of the American Statistical Association, 55(292), 708. http://doi.org/10.2307/2281592
   * Seber, G. A. F. (1982). The Estimation of Animal Abundance and Related Parameters. Macmillan.
