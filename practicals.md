@@ -24,15 +24,13 @@ Number | Practical Description                            | Practical           
 6      | DSM Prediction                                   | [Rmd](practicals/06-prediction.Rmd)          [PDF](practicals/06-prediction.pdf)          | [Rmd](practicals/06-prediction-solutions.Rmd)          [PDF](practicals/06-prediction-solutions.pdf)          |
 7      | DSM Variance                                     | [Rmd](practicals/07-variance.Rmd)            [PDF](practicals/07-variance.pdf)            | [Rmd](practicals/07-variance-solutions.Rmd)            [PDF](practicals/07-variance-solutions.pdf)            |
 8      | Mark-recapture distance sampling                 | [Rmd](practicals/08-mrds-in-R.Rmd) [R PDF](practicals/08-mrds-in-R.pdf) [Distance PDF](practicals/08-mrds_in_Distance.pdf) | [PDF](practicals/08-mrds_solution.pdf) |
-9      | Simulation of distance sampling data             | [Rmd](practicals/04-dssim.Rmd)                     |  |
+9      | Simulation of distance sampling data             | [Rmd](practicals/09-DSsim.Rmd) [PDF](practicals/09-DSsim.pdf                              |  |
 
-## Data sets 
+## Data sets
 
 Data for the practicals come in a variety of forms for analysis both in R and in Distance 7.
 
-
-
-### Data for density surface modelling (Practicals 5-10)
+### Data for density surface modelling (Practicals 2-7)
 
 To run the sperm whale analysis you'll need to download the following files, unzip them and store the unzipped folders in the same directory as the `Rmd` files for practicals 5-10 above:
 
@@ -43,13 +41,15 @@ The Distance 7 project containing these data can be downloaded [from this locati
 
 We'd like to thank Jason Roberts of Duke University for preparing these files in ArcGIS with the [MGET Toolbox](http://mgel2011-kvm.env.duke.edu/mget/).
 
-### Data for simulation (Practical 4)
-
-Download [this zip archive](practicals/prac4-DSsim.zip).  You will find a folder *(Distance simulation exercise)* filled with material useful for the R version of Practical 4, and two archives containing Distance 7 projects *(DSsimExercise and DSsimExerciseSolutions)*.
-
-### Data for double platform analysis (Practical 11)
+### Data for double platform analysis (Practical 8)
 
 For R users you just need the `csv` file: [Crabeater seals MRDS](practicals/crabbieMRDS.csv). For Distance users, the project file [can be downloaded here](practicals/CrabbieMRDSExercise.zip).
+
+### Data for simulation (Practical 9)
+
+[zip archive](practicals/simulation_exercise.zip) of R practical materials.
+
+[Distance 7 projects](practicals/DSsim_distance_projects.zip) (`DSsimExercise` and `DSsimExerciseSolutions`).
 
 ## Problems
 
