@@ -43,7 +43,17 @@ We'd like to thank Jason Roberts of Duke University for preparing these files in
 
 ### Data for double platform analysis (Practical 8)
 
-For R users you just need the `csv` file: [Crabeater seals MRDS](practicals/crabbieMRDS.csv). For Distance users, the project file [can be downloaded here](practicals/CrabbieMRDSExercise.zip).
+For R users you just need the `csv` files:
+
+- [Crabeater seals MRDS `csv`](practicals/crabbieMRDS.csv).
+- [Crabeater seals MCDS `csv`](practicals/crabbieMCDS.csv).
+
+For Distance for Windows users, project files can be downloaded here:
+
+- [Crabbie MRDS Exercise Distance project](practicals/CrabbieMRDSExercise.zip)
+- [Crabbie MCDS Exercise Distance project](practicals/CrabbieMCDSExercise.zip)
+- [Golftees Exercise Distance project](practicals/GolfteesExercise.zip)
+
 
 ### Data for simulation (Practical 9)
 
