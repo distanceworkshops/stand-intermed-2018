@@ -24,7 +24,7 @@ Number | Practical Description                            | Practical           
 6      | DSM Prediction                                   | [Rmd](practicals/06-prediction.Rmd)          [PDF](practicals/06-prediction.pdf)          | [Rmd](practicals/06-prediction-solutions.Rmd)          [PDF](practicals/06-prediction-solutions.pdf)          |
 7      | DSM Variance                                     | [Rmd](practicals/07-variance.Rmd)            [PDF](practicals/07-variance.pdf)            | [Rmd](practicals/07-variance-solutions.Rmd)            [PDF](practicals/07-variance-solutions.pdf)            |
 8      | Mark-recapture distance sampling                 | [Rmd](practicals/08-mrds-in-R.Rmd) [R PDF](practicals/08-mrds-in-R.pdf) [Distance PDF](practicals/08-mrds_in_Distance.pdf) | [PDF](practicals/08-mrds_solution.pdf) |
-9      | Simulation of distance sampling data             | [Rmd](practicals/09-DSsim.Rmd) [PDF](practicals/09-DSsim.pdf                              |  |
+9      | Simulation of distance sampling data             | [Rmd](practicals/09-DSsim.Rmd) [PDF](practicals/09-DSsim.pdf)                              |  |
 
 ## Data sets
 
