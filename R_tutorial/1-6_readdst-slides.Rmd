@@ -1,0 +1,162 @@
+---
+title: "R migration, etc"
+author: "David L Miller (`@millerdl`)"
+output:
+  xaringan::moon_reader:
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      slideNumberFormat: ""
+    lib_dir: libs
+    seal: false
+    mathjax: "https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML"
+css: ../slides/custom.css
+
+---
+
+```{r setup, include=FALSE}
+# setup
+library(knitr)
+library(magrittr)
+library(viridis)
+opts_chunk$set(cache=TRUE, echo=FALSE, warning=FALSE, error=FALSE,
+               message=FALSE, fig.height=8, fig.width=10)
+
+# some useful libraries
+library(RColorBrewer)
+library(ggplot2)
+library(cowplot)
+theme_set(theme_cowplot(20))
+
+```
+
+class: title-slide, inverse, center, middle
+
+# R migration, etc
+
+<div style="position: absolute; bottom: 15px; vertical-align: center; left: 10px">
+<img src="../slides/images/02-foundation-vertical-white.png" height="200">
+</div>
+
+---
+
+# We've spent all day talking about R
+
+- Many people do distance sampling analyses in Distance
+- Windows GUI program
+- Developed at St Andrews since 1997
+- Easy to start but harder for more complicated projects
+
+---
+
+class: inverse, center, middle
+
+<img src="http://distancesampling.org/Distance/images/analysis.jpg">
+
+---
+
+# Distance is bad at some things
+
+- Fiddly to do GIS stuff
+- Spatial modelling is hard, Distance doesn't have all the tools
+- Writing a lot of models can be time consuming
+
+---
+
+class: inverse, center, middle
+
+# 🎉The future🎉
+
+---
+
+# R is good
+
+- Easy to investigate more complicated models
+- Audit of what you did
+- Reproducible analyses
+
+---
+
+class: inverse, center, middle
+
+# How do we get there from here?
+
+---
+
+# `readdst`
+
+- R package to automatically convert Distance projects
+- Distance projects are just an Access database
+- "Frees" your data from the format and converts models
+
+---
+
+# A quick example
+
+```{r}
+project_file <- system.file("Golftees-example", package="readdst")
+project_file <- paste0(project_file,"/Golftees")
+```
+```{r, echo=TRUE}
+library(readdst)
+converted <- convert_project(project_file)
+```
+
+---
+
+# What's in that?
+
+```{r, echo=TRUE}
+converted
+```
+
+---
+
+# Let's run an analysis
+
+```{r, echo=TRUE}
+analysis_1 <- run_analysis(converted[[1]])
+summary(analysis_1)
+```
+
+---
+
+# Oh our data is there too!
+
+```{r, echo=TRUE}
+ls(converted[[1]]$env)
+```
+
+(an *environment*)
+
+---
+
+# The data
+
+```{r, echo=TRUE}
+head(converted[[1]]$env$data)
+```
+
+---
+
+# Checking results
+
+
+```{r, echo=TRUE, eval=FALSE}
+test_stats(converted[[1]])
+```
+
+```{r}
+print(test_stats(converted[[1]]), digits=4)
+```
+
+---
+
+# Recap
+
+- Distance can be a great way to start an analysis
+- More complicated stuff can be easier in R
+- `readdst` does the conversion for you
+- Checks results in case there are differences
+
+

@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>R migration, etc</title>
+    <meta charset="utf-8">
+    <meta name="author" content="David L Miller (@millerdl)" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../slides/custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+class: title-slide, inverse, center, middle
+
+# R migration, etc
+
+&lt;div style="position: absolute; bottom: 15px; vertical-align: center; left: 10px"&gt;
+&lt;img src="../slides/images/02-foundation-vertical-white.png" height="200"&gt;
+&lt;/div&gt;
+
+---
+
+# We've spent all day talking about R
+
+- Many people do distance sampling analyses in Distance
+- Windows GUI program
+- Developed at St Andrews since 1997
+- Easy to start but harder for more complicated projects
+
+---
+
+class: inverse, center, middle
+
+&lt;img src="http://distancesampling.org/Distance/images/analysis.jpg"&gt;
+
+---
+
+# Distance is bad at some things
+
+- Fiddly to do GIS stuff
+- Spatial modelling is hard, Distance doesn't have all the tools
+- Writing a lot of models can be time consuming
+
+---
+
+class: inverse, center, middle
+
+# 🎉The future🎉
+
+---
+
+# R is good
+
+- Easy to investigate more complicated models
+- Audit of what you did
+- Reproducible analyses
+
+---
+
+class: inverse, center, middle
+
+# How do we get there from here?
+
+---
+
+# `readdst`
+
+- R package to automatically convert Distance projects
+- Distance projects are just an Access database
+- "Frees" your data from the format and converts models
+
+---
+
+# A quick example
+
+
+
+```r
+library(readdst)
+converted &lt;- convert_project(project_file)
+```
+
+---
+
+# What's in that?
+
+
+```r
+converted
+```
+
+```
+##    ID                      Name  Status
+## 1   3 FI - MR dist+size+sex+exp Not Run
+## 2   2              FI - MR dist Not Run
+## 3   7                     io.pi Not Run
+## 4   9           FI - Petersen 1 Not Run
+## 5  10           FI - Petersen 2 Not Run
+## 6   1             FI - Petersen  Ran OK
+## 7   6                     io.fi  Ran OK
+## 8   4      ds (single platform)  Ran OK
+## 9   5                     trial  Ran OK
+## 10  8            test intervals  Ran OK
+```
+
+---
+
+# Let's run an analysis
+
+
+```r
+analysis_1 &lt;- run_analysis(converted[[1]])
+summary(analysis_1)
+```
+
+```
+## 
+## Summary for trial.fi object 
+## Number of observations               :  162 
+## Number seen by primary               :  124 
+## Number seen by secondary (trials)    :  142 
+## Number seen by both (detected trials):  104 
+## AIC                                  :  510.766 
+## 
+## 
+## Conditional detection function parameters:
+##             estimate       se
+## (Intercept) 1.006805 0.189555
+## 
+##                         Estimate          SE         CV
+## Average p              0.7323944  0.03799900 0.05188325
+## Average primary p(0)   0.7323944  0.03715144 0.05072601
+## N in covered region  169.3076923 11.64565922 0.06878399
+```
+
+---
+
+# Oh our data is there too!
+
+
+```r
+ls(converted[[1]]$env)
+```
+
+```
+## [1] "data"         "obs.table"    "region.table" "sample.table"
+## [5] "units"
+```
+
+(an *environment*)
+
+---
+
+# The data
+
+
+```r
+head(converted[[1]]$env$data)
+```
+
+```
+##   object observer detected sex exposure distance size       Study.Area
+## 1      1        1        1   1        1     2.68    2 GolfteesExercise
+## 2      1        2        0   1        1     2.68    2 GolfteesExercise
+## 3      2        1        1   1        0     3.33    2 GolfteesExercise
+## 4      2        2        0   1        0     3.33    2 GolfteesExercise
+## 5      3        1        1   0        0     0.34    1 GolfteesExercise
+## 6      3        2        0   0        0     0.34    1 GolfteesExercise
+##   Region.Label Sample.Label
+## 1      Default      Default
+## 2      Default      Default
+## 3      Default      Default
+## 4      Default      Default
+## 5      Default      Default
+## 6      Default      Default
+```
+
+---
+
+# Checking results
+
+
+
+```r
+test_stats(converted[[1]])
+```
+
+
+```
+##         Statistic Distance_value      mrds_value      Difference Pass
+## 1             AIC     510.765991 510.76603075588   0.00000007784    ✓
+## 2  log-likelihood         -254.4          -254.4               0    ✓
+## 3         density    0.309649706   0.30964972527   0.00000004933    ✓
+## 4     CV(density)        0.07345         0.08365         0.13886     
+## 5     individuals     520.211487 520.21153846193   0.00000009893    ✓
+## 6 CV(individuals)        0.07345         0.08365         0.13886
+```
+
+---
+
+# Recap
+
+- Distance can be a great way to start an analysis
+- More complicated stuff can be easier in R
+- `readdst` does the conversion for you
+- Checks results in case there are differences
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"slideNumberFormat": ""
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://cdn.bootcss.com/mathjax/2.7.1/MathJax.js?config=TeX-MML-AM_HTMLorMML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
