@@ -646,7 +646,7 @@ summary(dsm_ts_all)$s.table
 ```{r sensitivity-depth, fig.width=12}
 par(mfrow=c(1,2))
 plot(dsm_ts_all, select=2, ylim=c(-5,5))
-plot(dsm_no_xy, select=2, ylim=c(-5,5))
+plot(dsm_no_xy, select=3, ylim=c(-5,5))
 ```
 
 

@@ -114,7 +114,7 @@ $$
 n_j = \color{red}{A_j}\color{blue}{\hat{p}_j} \color{green}{\exp}\left[\color{grey}{ \beta_0 + s(\text{y}_j) + s(\text{Depth}_j)} \right] + \epsilon_j
 $$
 
-where $\epsilon_j \sim N(0, \sigma^2)$, $\quad n_j\sim$ count distribution
+where $\epsilon_j$ are some errors, $\quad n_j\sim$ count distribution
 
 - $\color{red}{\text{area of segment - offset}}$
 - $\color{blue}{\text{probability of detection in segment}}$
@@ -132,7 +132,7 @@ $$
 \color{red}{n_j} = A_j\hat{p}_j \exp\left[ \beta_0 + s(\text{y}_j) + s(\text{Depth}_j) \right] + \epsilon_j
 $$
 <br/>
-where $\epsilon_j \sim N(0, \sigma^2)$, $\quad \color{red}{n_j\sim \text{count distribution}}$
+where $\epsilon_j$ are some errors, $\quad \color{red}{n_j\sim \text{count distribution}}$
 
 
 ---
@@ -239,7 +239,7 @@ $$
 n_j = A_j\hat{p}_j \exp\left[ \beta_0 + \color{red}{s(\text{y}_j) + s(\text{Depth}_j}) \right] + \epsilon_j
 $$
 <br/>
-where $\epsilon_j \sim N(0, \sigma^2)$, $\quad n_j\sim$ count distribution
+where $\epsilon_j$ are some errors, $\quad n_j\sim$ count distribution
 
 
 ---
@@ -566,7 +566,7 @@ $$
 n_j = A_j\hat{p}_j \exp\left[ \beta_0 + s(\text{y}_j) \right] + \epsilon_j
 $$
 <br/>
-where $\epsilon_j \sim N(0, \sigma^2)$, $\quad n_j\sim$ count distribution
+where $\epsilon_j$ are some errors, $\quad n_j\sim$ count distribution
 <br/>
 - inside the link: `formula=count ~ s(y)`
 - response distribution: `family=nb()` or `family=tw()`
