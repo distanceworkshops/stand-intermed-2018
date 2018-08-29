@@ -182,12 +182,15 @@ Cannonical reference is Wood (2006)
   * Winiarski, K. J., Burt, M. L., Rexstad, E., Miller, D. L., Trocki, C. L., Paton, P. W. C., & McWilliams, S. R. (2014). Integrating aerial and ship surveys of marine birds into a combined density surface model: A case study of wintering Common Loons. The Condor, 116(2), 149–161. http://doi.org/10.1650/CONDOR-13-085.1
 
 
-## Prediction
+## Extrapolation
 
 * Laura Mannocci's thesis work on extrapolation
   * Mannocci, L., Monestiez, P., Spitz, J., & Ridoux, V. (2015). Extrapolating cetacean densities beyond surveyed regions: habitat-based predictions in the circumtropical belt. Journal of Biogeography, n/a–n/a. http://doi.org/10.1111/jbi.12530
 * Paul Conn and co's work on using a generalised Cook's Distance to find places where you shouldn't extrapolate
   * Conn, P. B., Johnson, D. S., & Boveng, P. L. (2015). On extrapolating past the range of observed data when making statistical predictions in ecology. PLoS ONE, 10(10), e0141416–16. http://doi.org/10.1371/journal.pone.0141416
+* Katherine Yates and Phil Bouchet's papers on transferrability
+  * Outstanding Challenges in the Transferability of Ecological Models. Yates, Katherine L. et al. Trends in Ecology & Evolution https://doi.org/10.1016/j.tree.2018.08.001
+  * Sequeira AMM, Bouchet PJ, Yates KL, Mengersen K, Caley MJ. 2018. Transferring biodiversity models for conservation: Opportunities and challenges. Methods in Ecology and Evolution, 9(5): 1250-1264. https://besjournals.onlinelibrary.wiley.com/doi/abs/10.1111/2041-210X.12998
 
 ## Variance
 
