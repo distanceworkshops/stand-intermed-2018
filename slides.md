@@ -24,3 +24,8 @@ Mark-recapture distance sampling (MRDS) in Distance 7.1 |                       
 Simulation of distance sampling                         |                                               | [PDF](slides/Lecture9DSsim.pdf)        |
 
 
+## Additional stuff
+
+- [Whiteboard drawing of the DSM tables and how they relate to each other](slides/dsm_tables_whiteboard.png)
+
+
