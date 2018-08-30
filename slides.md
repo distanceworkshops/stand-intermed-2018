@@ -27,5 +27,4 @@ Simulation of distance sampling                         |                       
 ## Additional stuff
 
 - [Whiteboard drawing of the DSM tables and how they relate to each other](slides/dsm_tables_whiteboard.png)
-
-
+- [Computerized version of whiteboard drawing of the DSM tables and how they relate to each](slides/dsm_tables.png)
