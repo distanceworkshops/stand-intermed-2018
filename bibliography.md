@@ -66,6 +66,8 @@ Estimation of sperm whale abundance in the North Atlantic by NOAA:
   * Marques, T. A. (2004). Predicting and correcting bias caused by measurement error in line transect sampling using multiplicative error models. Biometrics, 60(3), 757–763. http://doi.org/10.1111/j.0006-341X.2004.00226.x
 * Movement in distance sampling:
   * Glennie, R., Buckland, S. T., & Thomas, L. (2015). The Effect of Animal Movement on Line Transect Estimates of Abundance. PLoS ONE, 10(3), e0121333–15. http://doi.org/10.1371/journal.pone.0121333
+* Overlapping transects
+  * Buckland, ST 2006, 'Point transect surveys for songbirds: robust methodologies' The Auk, vol. 123, no. 2, pp. 345-357. https://doi.org/10.1642/0004-8038(2006)123[345:PSFSRM]2.0.CO;2
 
 ## Advanced distance sampling
 
