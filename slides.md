@@ -28,3 +28,7 @@ Simulation of distance sampling                         |                       
 
 - [Whiteboard drawing of the DSM tables and how they relate to each other](slides/dsm_tables_whiteboard.png)
 - [Computerized version of whiteboard drawing of the DSM tables and how they relate to each](slides/dsm_tables.png)
+- Research talks
+  - [Acoustics](slides/Acoustics_overview_2018_DHarris.pdf) Danielle Harris
+  - [Movement](slides/movement_ds_workshop_2018.pdf) Richard Glennie
+<!--  - [Spatially explicit capture-recapture](slides/) David Borchers-->
