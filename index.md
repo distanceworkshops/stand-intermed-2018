@@ -8,6 +8,9 @@ layout: index
 
 This is the site for the Intermediate-level Distance Sampling Workshop given in St Andrews, 26th to 31st August 2018.
 
+![Course participants outside the Observatory](images/class_2018.jpg)
+
+
 ## Course materials
 
 - [Slides](slides.html)
