@@ -31,4 +31,4 @@ Simulation of distance sampling                         |                       
 - Research talks
   - [Acoustics](slides/Acoustics_overview_2018_DHarris.pdf) Danielle Harris
   - [Movement](slides/movement_ds_workshop_2018.pdf) Richard Glennie
-<!--  - [Spatially explicit capture-recapture](slides/) David Borchers-->
+  - [Spatially explicit capture-recapture](slides/ADS_SCR_talk_2017.pdf) David Borchers
