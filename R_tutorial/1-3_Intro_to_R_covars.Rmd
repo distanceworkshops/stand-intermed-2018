@@ -11,8 +11,8 @@ header-includes: \usepackage{color}
 knitr::opts_chunk$set(echo = TRUE)
 
 # Specify whether answers are shown 
-#answer <- TRUE
-answer <- FALSE
+answer <- TRUE
+#answer <- FALSE
 
 # Load libraries
 library(Distance)
@@ -289,7 +289,7 @@ results <- NULL
 results$formula <- "None"
 results$key <- temp$ds$key
 results$npar <- length(temp$ddf$par)
-results$aic <- temp$ddf$criterion
+results$AIC <- temp$ddf$criterion
 for (i in 1:len) {
   j <- i + 1
   covars <- as.formula(paste("~",form[i],sep=""))
