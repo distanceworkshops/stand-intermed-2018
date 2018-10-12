@@ -11,8 +11,8 @@ header-includes: \usepackage{color}
 knitr::opts_chunk$set(echo = TRUE)
 
 # Specify whether answers are shown 
-answer <- TRUE
-#answer <- FALSE
+#answer <- TRUE
+answer <- FALSE
 
 # Load libraries
 library(Distance)
